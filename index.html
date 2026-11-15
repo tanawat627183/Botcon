@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ระบบช่วยกดบัตร - Ticket Sniper Control Panel</title>
+  <title>ระบบช่วยกดบัตร - Ticket Sniper Universal v5.0</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -43,7 +43,7 @@
   <header class="border-b border-borderDark bg-[#0a0c10]/90 backdrop-blur sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
       <div class="flex items-center gap-2 text-pastelPink font-bold text-lg">
-        <i data-lucide="ticket"></i> ระบบช่วยกดบัตร <span class="text-[10px] bg-purple-950 text-pastelPurple px-2 py-0.5 rounded-full border border-pastelPurple/30">v3.0 Permanent</span>
+        <i data-lucide="ticket"></i> ระบบช่วยกดบัตร <span class="text-[10px] bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30">v5.0 Universal</span>
       </div>
       <nav class="flex items-center space-x-2 sm:space-x-6 h-full">
         <button onclick="switchMainTab('dashboard')" id="nav-dashboard" class="main-nav-btn h-full flex items-center gap-2 text-sm font-medium border-b-2 border-pastelPurple text-pastelPurple transition px-2">
@@ -56,7 +56,7 @@
         </button>
         <button onclick="switchMainTab('script')" id="nav-script" class="main-nav-btn h-full flex items-center gap-2 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-200 transition px-2">
           <i data-lucide="code-2" class="w-4 h-4"></i>
-          <span>สคริปต์ช่วยกด (v3.0)</span>
+          <span>สคริปต์ Universal (v5.0)</span>
         </button>
       </nav>
       <div class="hidden sm:flex items-center gap-2 text-xs text-gray-400">
@@ -70,13 +70,13 @@
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
 
     <!-- ========================================== -->
-    <!-- หน้า 1: หน้าควบคุม & ทางลัด (DASHBOARD)    -->
+    <!-- หน้า 1: DASHBOARD                          -->
     <!-- ========================================== -->
     <section id="view-dashboard" class="space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 class="text-2xl sm:text-3xl font-bold text-gray-100 tracking-tight">ศูนย์ควบคุมการกดบัตร</h1>
-          <p class="text-xs text-gray-400 mt-1">ปุ่มเปิดลิงก์เข้าหน้างานโดยตรง + ปุ่มคัดลอกข้อมูลผู้ซื้อด่วน + แชร์การตั้งค่าให้เครื่องแฟน</p>
+          <h1 class="text-2xl sm:text-3xl font-bold text-gray-100 tracking-tight">ศูนย์ควบคุมการกดบัตร (ทุกแพลตฟอร์ม)</h1>
+          <p class="text-xs text-gray-400 mt-1">พร้อมใช้งานสำหรับ ALL Ticket, ThaiTicketMajor, Ticketmelon และ Eventpop ในสคริปต์เดียว</p>
         </div>
         <div class="flex items-center gap-2">
           <button onclick="shareConfigToPartner()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-sky-950/60 hover:bg-sky-900/60 text-sky-300 border border-sky-800/60 transition">
@@ -85,78 +85,88 @@
         </div>
       </div>
 
-      <!-- การ์ดสรุปสถานะ 4 ช่อง -->
+      <!-- แจ้งเตือนเงื่อนไขสำคัญของงาน -->
+      <div class="bg-amber-950/30 border border-amber-600/40 rounded-xl p-4 flex items-start gap-3">
+        <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
+        <div class="text-xs space-y-1">
+          <div class="font-semibold text-amber-300">เช็กลิสต์สำคัญก่อนกดงาน Khemjira One Last Forever (17 พ.ย. 2026)</div>
+          <p class="text-gray-300 leading-relaxed">
+            • <b>ชื่อบนบัตรแก้ไม่ได้:</b> เว็บ allticket.com จะดึงชื่อ-นามสกุลและเลขบัตรประชาชนจาก <b>บัญชี ALL Member ที่ล็อกอิน</b> มาพิมพ์ลงบัตรทันที (จำกัด 1 คน/ใบ) คุณเดียร์และแฟนต้องล็อกอินบัญชีของตัวเองแยกกันเท่านั้น
+          </p>
+        </div>
+      </div>
+
+      <!-- การ์ดสรุปสถานะ -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="bg-bgCard border border-borderDark rounded-xl p-4 flex flex-col justify-between">
-          <span class="text-xs text-gray-400">เว็บเป้าหมาย</span>
-          <div id="dash-platform" class="text-lg font-bold text-emerald-400 my-2">ThaiTicketMajor</div>
-          <span class="text-[10px] text-gray-500">เปลี่ยนได้ที่หน้าตั้งค่า</span>
+          <span class="text-xs text-gray-400">โหมดการทำงาน</span>
+          <div id="dash-platform" class="text-base font-bold text-emerald-400 my-2">ALL Ticket (Universal)</div>
+          <span class="text-[10px] text-gray-500">รองรับทุกเว็บในสคริปต์เดียว</span>
         </div>
         <div class="bg-bgCard border border-borderDark rounded-xl p-4 flex flex-col justify-between">
-          <span class="text-xs text-gray-400">รหัสงาน / เวลาเปิดขาย</span>
-          <div id="dash-event-id" class="text-base font-bold text-pastelPurple my-2 truncate">ยังไม่ได้ตั้งค่า</div>
-          <span id="dash-sale-time" class="text-[10px] text-gray-400">เวลา: 10:00 น.</span>
+          <span class="text-xs text-gray-400">งาน & เวลาเปิดขายเว็บ</span>
+          <div id="dash-event-id" class="text-sm font-bold text-pastelPurple my-2 truncate">Khemjira One Last Forever</div>
+          <span id="dash-sale-time" class="text-[10px] text-emerald-400">เปิดขาย: 13:00 น.</span>
         </div>
         <div class="bg-bgCard border border-borderDark rounded-xl p-4 flex flex-col justify-between">
-          <span class="text-xs text-gray-400">โซนเป้าหมาย & แถว</span>
-          <div id="dash-top-zone" class="text-base font-bold text-sky-400 my-2 truncate">VA1 ➔ VA2</div>
+          <span class="text-xs text-gray-400">ลำดับโซนเป้าหมาย</span>
+          <div id="dash-top-zone" class="text-sm font-bold text-sky-400 my-2 truncate">A1 ➔ A2 ➔ B2 ➔ B3</div>
           <span id="dash-row-pref" class="text-[10px] text-gray-400">แถว: ทุกแถวที่ว่าง</span>
         </div>
         <div class="bg-bgCard border border-borderDark rounded-xl p-4 flex flex-col justify-between">
-          <span class="text-xs text-gray-400">โหมดยืนยันที่นั่ง</span>
-          <div id="dash-auto-confirm" class="text-base font-bold text-pastelPink my-2">กดยืนยันอัตโนมัติ</div>
+          <span class="text-xs text-gray-400">การกดยืนยัน & ผู้ซื้อ</span>
+          <div id="dash-auto-confirm" class="text-sm font-bold text-pastelPink my-2">เลือก + ยืนยันทันที</div>
           <span class="text-[10px] text-gray-500">โปรไฟล์ผู้ซื้อ: <span id="stat-buyers">2</span> คน</span>
         </div>
       </div>
 
-      <!-- ปุ่มทางลัดเปิดหน้างานจริง -->
+      <!-- ทางลัดเปิดหน้างานจริง -->
       <div class="bg-bgCard border border-borderDark rounded-xl p-5 space-y-4">
         <div>
           <h2 class="text-base font-semibold text-white flex items-center gap-2">
-            <i data-lucide="external-link" class="w-4 h-4 text-pastelPurple"></i> ทางลัดเปิดหน้าจองบัตรจริง (Direct Launch)
+            <i data-lucide="external-link" class="w-4 h-4 text-pastelPurple"></i> ทางลัดเปิดหน้าจองบัตรจริง
           </h2>
-          <p class="text-xs text-gray-400 mt-0.5">กดปุ่มนี้เพื่อเปิดหน้าเว็บคอนเสิร์ตในแท็บใหม่ทันที สคริปต์ v3.0 จะทำงานอัตโนมัติเมื่อเปิดหน้าเว็บ</p>
+          <p class="text-xs text-gray-400 mt-0.5">กดเปิดเว็บเป้าหมายทันที (ตรวจสอบว่าเปิดใช้งาน Tampermonkey และวางโค้ด v5.0 แล้ว)</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <button onclick="openTargetEvent()" class="w-full py-3.5 px-4 rounded-xl bg-pastelPurple hover:bg-purple-400 text-purple-950 font-bold text-sm shadow-lg shadow-pastelPurple/20 transition flex justify-center items-center gap-2">
             <i data-lucide="rocket" class="w-4 h-4"></i> เปิดหน้าเว็บคอนเสิร์ตเป้าหมายทันที
           </button>
           <button onclick="switchMainTab('script')" class="w-full py-3.5 px-4 rounded-xl bg-bgInput hover:bg-gray-800 border border-borderDark text-emerald-400 font-semibold text-sm transition flex justify-center items-center gap-2">
-            <i data-lucide="code-2" class="w-4 h-4"></i> ดูโค้ดสคริปต์ v3.0 (อัปเดตตัวจับที่นั่งแล้ว)
+            <i data-lucide="code-2" class="w-4 h-4"></i> คัดลอกสคริปต์ Universal v5.0
           </button>
         </div>
       </div>
 
-      <!-- แผงปุ่มคัดลอกข้อมูลด่วน (Quick Copy Panel) -->
+      <!-- แผงคัดลอกข้อมูลด่วน -->
       <div class="bg-bgCard border border-borderDark rounded-xl p-5 space-y-4">
         <div>
           <h2 class="text-base font-semibold text-white flex items-center gap-2">
             <i data-lucide="clipboard-copy" class="w-4 h-4 text-pastelPink"></i> แผงคัดลอกข้อมูลด่วน (สำหรับวางหน้ากรอกชื่อ/จ่ายเงิน)
           </h2>
-          <p class="text-xs text-gray-400 mt-0.5">แตะปุ่มเพื่อคัดลอก แล้วสลับหน้าต่างไปวาง (Paste) ในช่องกรอกชื่อผู้เข้าชมของ TTM / Ticketmelon</p>
+          <p class="text-xs text-gray-400 mt-0.5">แตะปุ่มเพื่อคัดลอก แล้วสลับแท็บไปวาง (Paste) ในช่องกรอกข้อมูล</p>
         </div>
         <div id="dashboard-quick-copy" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
       </div>
     </section>
 
     <!-- ========================================== -->
-    <!-- หน้า 2: ตั้งค่าข้อมูล (CONFIGURATION)      -->
+    <!-- หน้า 2: SETUP                              -->
     <!-- ========================================== -->
     <section id="view-setup" class="hidden space-y-5">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 class="text-2xl sm:text-3xl font-bold text-gray-100 tracking-tight">ตั้งค่าข้อมูลเตรียมกดบัตร</h1>
-          <p class="text-xs text-gray-400 mt-1">ตั้งค่าครั้งเดียว ระบบจะนำค่าเหล่านี้ไปสร้างเป็นโค้ดสคริปต์ v3.0 ให้อัตโนมัติ</p>
+          <p class="text-xs text-gray-400 mt-1">สคริปต์ v5.0 รองรับทุกแพลตฟอร์ม ทุกสีราคา และทุกสัญลักษณ์ที่นั่งในตัวเดียว</p>
         </div>
         <span id="unsaved-badge" class="hidden items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-950/60 text-amber-400 border border-amber-700/50">
           • มีการแก้ไขที่ยังไม่บันทึก
         </span>
       </div>
 
-      <!-- แถบเมนูย่อย -->
       <div class="flex items-center gap-2 overflow-x-auto pb-2">
         <button onclick="switchConfigTab('basic')" id="cfg-tab-basic" class="cfg-pill px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 bg-pastelPurple text-purple-950 shrink-0">
-          <i data-lucide="sliders" class="w-4 h-4"></i> ข้อมูลงาน & การทำงาน
+          <i data-lucide="sliders" class="w-4 h-4"></i> เว็บเป้าหมาย & เวลา
         </button>
         <button onclick="switchConfigTab('priorities')" id="cfg-tab-priorities" class="cfg-pill px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0">
           <i data-lucide="star" class="w-4 h-4"></i> ลำดับโซน & แถว
@@ -164,194 +174,151 @@
         <button onclick="switchConfigTab('buyers')" id="cfg-tab-buyers" class="cfg-pill px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0">
           <i data-lucide="user-check" class="w-4 h-4"></i> โปรไฟล์ผู้ซื้อ (Buyers)
         </button>
-        <button onclick="switchConfigTab('browser')" id="cfg-tab-browser" class="cfg-pill px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0">
-          <i data-lucide="monitor-smartphone" class="w-4 h-4"></i> แบ่งหน้าที่อุปกรณ์
-        </button>
       </div>
 
-      <!-- แท็บ 1: ข้อมูลงาน -->
+      <!-- แท็บ 1: Basic -->
       <div id="cfg-panel-basic" class="cfg-panel bg-bgCard border border-borderDark rounded-2xl p-5 sm:p-6 space-y-6">
         <div>
-          <h2 class="text-lg font-semibold text-white">1. เลือกเว็บไซต์เป้าหมาย</h2>
-          <p class="text-xs text-gray-500 mt-1">เลือกเว็บที่จะกดบัตร เพื่อให้ระบบสร้างสคริปต์ตรวจจับปุ่มและที่นั่งตรงตามโครงสร้างของเว็บนั้น</p>
+          <h2 class="text-lg font-semibold text-white">1. เลือกทางลัดเว็บไซต์เริ่มต้น</h2>
+          <p class="text-xs text-gray-500 mt-1">หมายเหตุ: โค้ดสคริปต์ v5.0 จะทำงานอัตโนมัติบน <b>ทุกเว็บพร้อมกัน</b> (ALL Ticket, TTM, Ticketmelon, Eventpop) ไม่ว่าจะเลือกปุ่มไหน</p>
         </div>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div onclick="selectBotMode('ttm')" id="mode-card-ttm" class="cursor-pointer rounded-xl p-5 border-2 border-pastelPurple bg-purple-900/10 text-center transition relative overflow-hidden">
-            <div class="absolute top-0 right-0 bg-pastelPurple text-purple-950 text-[10px] font-bold px-2 py-1 rounded-bl-lg">เลือกอยู่</div>
-            <div class="flex justify-center mb-2 text-pastelPurple"><i data-lucide="ticket" class="w-8 h-8"></i></div>
-            <div class="font-semibold text-gray-100 text-base">ThaiTicketMajor (TTM)</div>
-            <div class="text-xs text-gray-400 mt-1.5">ดักรีเฟรชเปิดขาย + จับเลขที่นั่งว่างทุกสีราคา + กดยืนยันอัตโนมัติ</div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div onclick="selectBotMode('allticket')" id="mode-card-allticket" class="cursor-pointer rounded-xl p-4 border-2 border-pastelPurple bg-purple-900/15 text-center transition">
+            <div class="flex justify-center mb-1.5 text-orange-400"><i data-lucide="flame" class="w-6 h-6"></i></div>
+            <div class="font-semibold text-gray-100 text-sm">ALL Ticket</div>
+            <div class="text-[10px] text-gray-400 mt-1">allticket.com</div>
           </div>
-          <div onclick="selectBotMode('melon')" id="mode-card-melon" class="cursor-pointer rounded-xl p-5 border-2 border-borderDark bg-bgInput/50 hover:border-gray-600 text-center transition relative overflow-hidden">
-            <div class="flex justify-center mb-2 text-pastelPink"><i data-lucide="music" class="w-8 h-8"></i></div>
-            <div class="font-semibold text-gray-100 text-base">Ticketmelon</div>
-            <div class="text-xs text-gray-400 mt-1.5">ดักปุ่ม Buy Tickets / Get Tickets ทันทีที่เปิดขาย</div>
+          <div onclick="selectBotMode('ttm')" id="mode-card-ttm" class="cursor-pointer rounded-xl p-4 border-2 border-borderDark bg-bgInput/50 hover:border-gray-600 text-center transition">
+            <div class="flex justify-center mb-1.5 text-pastelPurple"><i data-lucide="ticket" class="w-6 h-6"></i></div>
+            <div class="font-semibold text-gray-100 text-sm">ThaiTicketMajor</div>
+            <div class="text-[10px] text-gray-400 mt-1">thaiticketmajor.com</div>
+          </div>
+          <div onclick="selectBotMode('melon')" id="mode-card-melon" class="cursor-pointer rounded-xl p-4 border-2 border-borderDark bg-bgInput/50 hover:border-gray-600 text-center transition">
+            <div class="flex justify-center mb-1.5 text-pastelPink"><i data-lucide="music" class="w-6 h-6"></i></div>
+            <div class="font-semibold text-gray-100 text-sm">Ticketmelon</div>
+            <div class="text-[10px] text-gray-400 mt-1">ticketmelon.com</div>
+          </div>
+          <div onclick="selectBotMode('eventpop')" id="mode-card-eventpop" class="cursor-pointer rounded-xl p-4 border-2 border-borderDark bg-bgInput/50 hover:border-gray-600 text-center transition">
+            <div class="flex justify-center mb-1.5 text-sky-400"><i data-lucide="sparkles" class="w-6 h-6"></i></div>
+            <div class="font-semibold text-gray-100 text-sm">Eventpop</div>
+            <div class="text-[10px] text-gray-400 mt-1">eventpop.me</div>
           </div>
         </div>
 
         <div class="space-y-2 border-t border-borderDark pt-5">
-          <label class="block text-sm font-medium text-gray-200">2. ลิงก์หน้าคอนเสิร์ตเต็มๆ (Event URL)</label>
-          <p class="text-[11px] text-gray-500">วางลิงก์หน้างานเต็มๆ ได้เลย เช่น <span class="text-gray-300">https://www.thaiticketmajor.com/performance/...</span></p>
-          <input type="text" id="input-event-id" oninput="markUnsaved()" placeholder="วางลิงก์หน้าคอนเสิร์ตที่นี่..." class="w-full bg-bgInput border border-borderDark rounded-xl px-4 py-3 text-sm text-gray-200 focus:outline-none focus:border-pastelPurple">
+          <label class="block text-sm font-medium text-gray-200">2. ลิงก์หน้างานเต็มๆ (Event URL)</label>
+          <input type="text" id="input-event-id" oninput="markUnsaved()" placeholder="https://www.allticket.com/event/..." class="w-full bg-bgInput border border-borderDark rounded-xl px-4 py-3 text-sm text-gray-200 focus:outline-none focus:border-pastelPurple">
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 border-t border-borderDark pt-5">
           <div class="space-y-2">
             <label class="block text-sm font-medium text-gray-200">3. เวลาเปิดขายจริง (ชั่วโมง : นาที)</label>
-            <p class="text-[11px] text-gray-500">ระบบจะเร่งความเร็วรีเฟรชช่วง 10 วินาทีสุดท้ายก่อนถึงเวลานี้</p>
+            <p class="text-[11px] text-gray-500">ระบบจะเร่งรีเฟรชถี่ช่วง 10 วินาทีสุดท้ายก่อนถึงเวลานี้</p>
             <div class="flex gap-3 max-w-xs">
-              <input type="number" id="input-sale-hour" min="0" max="23" value="10" oninput="markUnsaved()" class="w-full bg-bgInput border border-borderDark rounded-xl px-4 py-2.5 text-sm text-center text-gray-200" placeholder="ชม.">
+              <input type="number" id="input-sale-hour" min="0" max="23" value="13" oninput="markUnsaved()" class="w-full bg-bgInput border border-borderDark rounded-xl px-4 py-2.5 text-sm text-center text-gray-200">
               <span class="self-center font-bold">:</span>
-              <input type="number" id="input-sale-min" min="0" max="59" value="0" oninput="markUnsaved()" class="w-full bg-bgInput border border-borderDark rounded-xl px-4 py-2.5 text-sm text-center text-gray-200" placeholder="นาที">
+              <input type="number" id="input-sale-min" min="0" max="59" value="0" oninput="markUnsaved()" class="w-full bg-bgInput border border-borderDark rounded-xl px-4 py-2.5 text-sm text-center text-gray-200">
             </div>
           </div>
 
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-gray-200">4. การกดปุ่มยืนยันที่นั่ง (Auto-Confirm)</label>
-            <p class="text-[11px] text-gray-500">เลือกให้กดปุ่มสีแดง "ยืนยันที่นั่ง" ทันที หรือหยุดรอให้เราเลือกเพิ่มเอง</p>
+            <label class="block text-sm font-medium text-gray-200">4. การกดปุ่มยืนยัน (Auto-Confirm)</label>
+            <p class="text-[11px] text-gray-500">เลือกให้กดปุ่มยืนยัน/ดำเนินการต่อทันทีเมื่อจิ้มที่นั่งได้</p>
             <select id="input-auto-confirm" onchange="markUnsaved()" class="w-full bg-bgInput border border-borderDark rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-pastelPurple">
-              <option value="true">กดเลือกที่นั่ง + กดปุ่ม "ยืนยันที่นั่ง" ทันที (แนะนำสำหรับ 1 ใบ)</option>
-              <option value="false">กดเลือกที่นั่งให้ 1 ใบ แล้วหยุดรอให้เรากดยืนยันเอง (เผื่อเลือกเพิ่ม)</option>
+              <option value="true">กดเลือกที่นั่ง + กดยืนยันทันที (แนะนำสำหรับกด 1 ใบ)</option>
+              <option value="false">กดเลือกที่นั่งให้ 1 ใบ แล้วหยุดรอให้เรากดยืนยันเอง</option>
             </select>
           </div>
         </div>
       </div>
 
-      <!-- แท็บ 2: ลำดับโซน -->
+      <!-- แท็บ 2: Priorities -->
       <div id="cfg-panel-priorities" class="cfg-panel hidden bg-bgCard border border-borderDark rounded-2xl p-5 sm:p-6 space-y-6">
         <div>
           <h2 class="text-lg font-semibold text-white">ลำดับโซนเป้าหมาย & แถวที่ต้องการ</h2>
-          <p class="text-xs text-gray-500 mt-1">ใส่ชื่อโซนที่อยากได้เรียงตามลำดับ และระบุแถวที่ต้องการ (ถ้าไม่ระบุ บอทจะเลือกที่นั่งว่างตัวแรกที่เจอทันที)</p>
+          <p class="text-xs text-gray-500 mt-1">ตั้งค่าเริ่มต้นตามผังงาน Khemjira (Hall 6): A1, A2, B2, B3, B1, B4, C2, C3, C1, C4, D1-D4, E1-E3</p>
         </div>
-        
         <div class="flex gap-2">
-          <input type="text" id="input-priority" onkeydown="if(event.key==='Enter') addPriority()" placeholder="พิมพ์ชื่อโซน เช่น VA1 แล้วกดปุ่มเพิ่ม" class="flex-1 bg-bgInput border border-borderDark rounded-xl px-4 py-3 text-sm text-gray-200 focus:outline-none focus:border-pastelPurple">
-          <button onclick="addPriority()" class="px-6 py-3 rounded-xl bg-bgInput border border-borderDark hover:bg-gray-800 text-white font-medium text-sm transition">
-            เพิ่มโซน
-          </button>
+          <input type="text" id="input-priority" onkeydown="if(event.key==='Enter') addPriority()" placeholder="พิมพ์ชื่อโซน เช่น A1 แล้วกดเพิ่ม" class="flex-1 bg-bgInput border border-borderDark rounded-xl px-4 py-3 text-sm text-gray-200 focus:outline-none focus:border-pastelPurple">
+          <button onclick="addPriority()" class="px-6 py-3 rounded-xl bg-bgInput border border-borderDark hover:bg-gray-800 text-white font-medium text-sm">เพิ่มโซน</button>
         </div>
-        
         <div class="bg-[#050608] rounded-xl p-4 min-h-[90px] border border-borderDark">
-          <p class="text-xs text-gray-500 mb-3"><i data-lucide="info" class="inline w-3 h-3"></i> ลำดับโซนเป้าหมายที่ตั้งไว้:</p>
           <div id="priority-tags-list" class="flex flex-wrap gap-2"></div>
         </div>
-
         <div class="space-y-2 border-t border-borderDark pt-5">
           <label class="block text-sm font-medium text-gray-200">ล็อกแถวที่ต้องการ (ไม่บังคับ - เว้นว่างไว้เพื่อให้กดทุกแถวที่ว่าง)</label>
-          <p class="text-[11px] text-gray-500">เช่น พิมพ์ <span class="text-pastelPurple font-mono">A, B, C</span> (คั่นด้วยลูกน้ำ) บอทจะเล็งเฉพาะแถว A, B, C ก่อน ถ้าเต็มจะกดแถวอื่นให้แทน</p>
-          <input type="text" id="input-preferred-rows" oninput="markUnsaved()" placeholder="เว้นว่างไว้ = กดทุกแถวที่ว่างทันที (แนะนำ)" class="w-full bg-bgInput border border-borderDark rounded-xl px-4 py-3 text-sm text-gray-200 focus:outline-none focus:border-pastelPurple">
+          <input type="text" id="input-preferred-rows" oninput="markUnsaved()" placeholder="เช่น A, B, C (เว้นว่าง = กดทุกแถวที่ว่างทันที)" class="w-full bg-bgInput border border-borderDark rounded-xl px-4 py-3 text-sm text-gray-200 focus:outline-none focus:border-pastelPurple">
         </div>
       </div>
 
-      <!-- แท็บ 3: ข้อมูลผู้ซื้อ -->
+      <!-- แท็บ 3: Buyers -->
       <div id="cfg-panel-buyers" class="cfg-panel hidden bg-bgCard border border-borderDark rounded-2xl p-5 sm:p-6 space-y-6">
         <div>
           <h2 class="text-lg font-semibold text-white">โปรไฟล์ผู้ซื้อ (สำหรับกดคัดลอกด่วนหน้างาน)</h2>
-          <p class="text-xs text-gray-500 mt-1">ใส่ชื่อ-นามสกุลจริงที่ต้องพิมพ์ลงบนบัตร และเบอร์โทรไว้ เพื่อกดคัดลอกไปวางในเสี้ยววินาที</p>
+          <p class="text-xs text-gray-500 mt-1">บันทึกชื่อ-นามสกุลจริงตามบัตรประชาชน และเบอร์โทรไว้</p>
         </div>
-
         <div id="buyer-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-
         <div class="border-t border-borderDark pt-6">
           <h3 class="text-sm font-medium text-pastelPink flex items-center gap-2 mb-4"><i data-lucide="plus-circle" class="w-4 h-4"></i> เพิ่มข้อมูลผู้ซื้อใหม่</h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">ชื่อ-นามสกุล (พิมพ์ลงบัตร)</label>
-              <input type="text" id="b-name" placeholder="Thanawat Rueangdee" class="w-full bg-bgInput border border-borderDark rounded-xl px-3 py-2 text-sm text-gray-200 focus:border-pastelPink outline-none">
-            </div>
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">อีเมลรับบัตร</label>
-              <input type="email" id="b-email" placeholder="example@gmail.com" class="w-full bg-bgInput border border-borderDark rounded-xl px-3 py-2 text-sm text-gray-200 focus:border-pastelPink outline-none">
-            </div>
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">เบอร์โทรศัพท์</label>
-              <input type="text" id="b-phone" placeholder="08XXXXXXXX" class="w-full bg-bgInput border border-borderDark rounded-xl px-3 py-2 text-sm text-gray-200 focus:border-pastelPink outline-none">
-            </div>
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">วิธีชำระเงินที่เตรียมไว้</label>
-              <input type="text" id="b-card" placeholder="เช่น QR พร้อมเพย์ (ไวที่สุด)" class="w-full bg-bgInput border border-borderDark rounded-xl px-3 py-2 text-sm text-gray-200 focus:border-pastelPink outline-none">
-            </div>
+            <input type="text" id="b-name" placeholder="ชื่อ-นามสกุล (ตรงตามบัตรประชาชน)" class="bg-bgInput border border-borderDark rounded-xl px-3 py-2 text-sm text-gray-200">
+            <input type="email" id="b-email" placeholder="อีเมลรับบัตร" class="bg-bgInput border border-borderDark rounded-xl px-3 py-2 text-sm text-gray-200">
+            <input type="text" id="b-phone" placeholder="เบอร์โทรศัพท์" class="bg-bgInput border border-borderDark rounded-xl px-3 py-2 text-sm text-gray-200">
+            <input type="text" id="b-card" placeholder="วิธีชำระเงิน (เช่น QR พร้อมเพย์)" class="bg-bgInput border border-borderDark rounded-xl px-3 py-2 text-sm text-gray-200">
           </div>
-          <button onclick="addBuyer()" class="mt-4 px-6 py-2.5 rounded-xl bg-bgInput border border-borderDark hover:border-pastelPink text-pastelPink font-medium text-sm transition">
-            เพิ่มโปรไฟล์นี้
-          </button>
+          <button onclick="addBuyer()" class="mt-4 px-6 py-2.5 rounded-xl bg-bgInput border border-borderDark hover:border-pastelPink text-pastelPink font-medium text-sm">เพิ่มโปรไฟล์นี้</button>
         </div>
       </div>
 
-      <!-- แท็บ 4: อุปกรณ์ -->
-      <div id="cfg-panel-browser" class="cfg-panel hidden bg-bgCard border border-borderDark rounded-2xl p-5 sm:p-6 space-y-6">
-        <div>
-          <h2 class="text-lg font-semibold text-white">กลยุทธ์การแบ่งเครื่องกด (MatePad 11.5 + PC แฟน)</h2>
-          <p class="text-xs text-gray-500 mt-1">แนวทางตั้งค่า 2 เครื่องพร้อมกันเพื่อเพิ่มโอกาสเข้าคิวและไม่โดนระบบจับ IP ซ้ำ</p>
-        </div>
-        <div id="device-list-container" class="space-y-3"></div>
-      </div>
-
-      <!-- ปุ่มบันทึก -->
-      <button onclick="saveAllSettings()" class="w-full py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30 transition active:scale-[0.99]">
-        <i data-lucide="save" class="w-5 h-5"></i> บันทึกการตั้งค่าและสร้างโค้ดสคริปต์ v3.0
+      <button onclick="saveAllSettings()" class="w-full py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30 transition">
+        <i data-lucide="save" class="w-5 h-5"></i> บันทึกการตั้งค่าและสร้างโค้ด Universal v5.0
       </button>
     </section>
 
     <!-- ========================================== -->
-    <!-- หน้า 3: สคริปต์ช่วยกดจริง (SCRIPT BUILDER)   -->
+    <!-- หน้า 3: SCRIPT BUILDER                     -->
     <!-- ========================================== -->
     <section id="view-script" class="hidden space-y-6">
       <div>
-        <h1 class="text-2xl sm:text-3xl font-bold text-gray-100 tracking-tight">โค้ดสคริปต์ช่วยกดจริง (Userscript v3.0)</h1>
-        <p class="text-xs text-gray-400 mt-1">อัปเดตตัวตรวจจับเลขที่นั่งว่าง (01-99) ทุกสีราคา และระบบกดยืนยันที่นั่งอัตโนมัติเรียบร้อยแล้ว</p>
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-100 tracking-tight">โค้ดสคริปต์ Universal v5.0 (All-in-One)</h1>
+        <p class="text-xs text-gray-400 mt-1">คัดลอกโค้ดชุดนี้ไปวางทับใน Tampermonkey ครั้งเดียว รองรับครบทั้ง ALL Ticket, TTM, Ticketmelon และ Eventpop ทุกสีและทุกสัญลักษณ์ที่นั่ง</p>
       </div>
-
       <div class="bg-bgCard border border-borderDark rounded-2xl p-5 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div class="text-sm font-semibold text-emerald-400 flex items-center gap-2">
-            <i data-lucide="terminal" class="w-4 h-4"></i> โค้ดพร้อมใช้งานสำหรับ: <span id="script-target-label" class="underline">ThaiTicketMajor</span>
+            <i data-lucide="terminal" class="w-4 h-4"></i> สถานะโค้ด: <span id="script-target-label" class="underline">พร้อมใช้งานทุกแพลตฟอร์ม</span>
           </div>
-          <button onclick="copyGeneratedScript()" class="px-4 py-2 rounded-xl bg-emeraldMain hover:bg-emeraldHover text-white font-semibold text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-950/40">
+          <button onclick="copyGeneratedScript()" class="px-4 py-2 rounded-xl bg-emeraldMain hover:bg-emeraldHover text-white font-semibold text-xs flex items-center gap-1.5">
             <i data-lucide="copy" class="w-4 h-4"></i> คัดลอกโค้ดทั้งหมด
           </button>
         </div>
-
         <pre id="generated-script-box" class="bg-[#050608] border border-borderDark rounded-xl p-4 text-xs font-mono text-gray-300 overflow-x-auto max-h-96 leading-relaxed"></pre>
       </div>
     </section>
 
   </main>
 
-  <!-- Toast แจ้งเตือน -->
   <div id="toast" class="fixed bottom-5 right-5 bg-gray-800 border border-gray-600 text-white px-5 py-3 rounded-2xl text-sm font-medium shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
     <i data-lucide="check-circle" class="text-emerald-400"></i> <span id="toast-msg">บันทึกเรียบร้อย</span>
   </div>
 
   <script>
-    // รองรับการนำเข้าค่าผ่าน URL Parameter (เวลาคุณเดียร์ส่งลิงก์ให้แฟน)
     const urlParams = new URLSearchParams(window.location.search);
-    const sharedEvent = urlParams.get('event');
-    const sharedMode = urlParams.get('mode');
-    const sharedHour = urlParams.get('h');
-    const sharedMin = urlParams.get('m');
+    const savedData = JSON.parse(localStorage.getItem('dear_sniper_config_v5') || 'null');
 
-    const savedData = JSON.parse(localStorage.getItem('dear_sniper_config_v3') || 'null');
-
-    let botMode = sharedMode || savedData?.botMode || 'ttm';
-    let eventUrl = sharedEvent || savedData?.eventUrl || '';
-    let saleHour = sharedHour !== null ? parseInt(sharedHour, 10) : (savedData?.saleHour ?? 10);
-    let saleMin = sharedMin !== null ? parseInt(sharedMin, 10) : (savedData?.saleMin ?? 0);
+    let botMode = urlParams.get('mode') || savedData?.botMode || 'allticket';
+    let eventUrl = urlParams.get('event') || savedData?.eventUrl || 'https://www.allticket.com/';
+    let saleHour = urlParams.get('h') !== null ? parseInt(urlParams.get('h'), 10) : (savedData?.saleHour ?? 13);
+    let saleMin = urlParams.get('m') !== null ? parseInt(urlParams.get('m'), 10) : (savedData?.saleMin ?? 0);
     let autoConfirm = savedData?.autoConfirm !== undefined ? savedData.autoConfirm : true;
     let preferredRows = savedData?.preferredRows || '';
-    let priorities = savedData?.priorities || ['VA1', 'VA2', 'A', 'B'];
+    let priorities = savedData?.priorities || ['A1', 'A2', 'B2', 'B3', 'B1', 'B4', 'C2', 'C3', 'C1', 'C4', 'D1', 'D2', 'D3', 'D4', 'E1', 'E2', 'E3'];
     let buyers = savedData?.buyers || [
-      { id: 1, name: 'Thanawat Rueangdee', email: 'dear.thanawat@example.com', phone: '08X-XXX-XXXX', card: 'QR พร้อมเพย์' },
+      { id: 1, name: 'ธนวัฒน์ เรืองดี', email: 'dear.thanawat@example.com', phone: '08X-XXX-XXXX', card: 'QR พร้อมเพย์' },
       { id: 2, name: 'โปรไฟล์แฟนคุณเดียร์', email: 'partner@example.com', phone: '09X-XXX-XXXX', card: 'QR พร้อมเพย์' }
     ];
 
-    const devices = [
-      { icon: 'tablet', name: 'เครื่องที่ 1: Huawei MatePad 11.5 (คุณเดียร์)', os: 'เปิดผ่าน Kiwi Browser + Tampermonkey (ใช้สคริปต์ v3.0)', ip: 'ใช้เน็ตซิมมือถือ (4G/5G) แยกต่างหาก' },
-      { icon: 'monitor', name: 'เครื่องที่ 2: คอมพิวเตอร์ PC (แฟนคุณเดียร์)', os: 'เปิดผ่าน Google Chrome + Tampermonkey (ใช้สคริปต์ v3.0)', ip: 'ใช้ Wi-Fi บ้าน และล็อกอินคนละบัญชี TTM/Ticketmelon' }
-    ];
-
-    // นำค่ามาใส่ใน Input
     document.getElementById('input-event-id').value = eventUrl;
     document.getElementById('input-sale-hour').value = saleHour;
     document.getElementById('input-sale-min').value = saleMin;
@@ -361,12 +328,10 @@
     function switchMainTab(tab) {
       ['dashboard', 'setup', 'script'].forEach(t => {
         document.getElementById(`view-${t}`).classList.add('hidden');
-        const nav = document.getElementById(`nav-${t}`);
-        nav.className = 'main-nav-btn h-full flex items-center gap-2 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-200 transition px-2';
+        document.getElementById(`nav-${t}`).className = 'main-nav-btn h-full flex items-center gap-2 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-200 transition px-2';
       });
       document.getElementById(`view-${tab}`).classList.remove('hidden');
-      const active = document.getElementById(`nav-${tab}`);
-      active.className = 'main-nav-btn h-full flex items-center gap-2 text-sm font-medium border-b-2 border-pastelPurple text-pastelPurple transition px-2';
+      document.getElementById(`nav-${tab}`).className = 'main-nav-btn h-full flex items-center gap-2 text-sm font-medium border-b-2 border-pastelPurple text-pastelPurple transition px-2';
       if (tab === 'script') generateScript();
     }
 
@@ -381,412 +346,4 @@
 
     function markUnsaved() {
       document.getElementById('unsaved-badge').classList.remove('hidden');
-      document.getElementById('unsaved-badge').classList.add('inline-flex');
-    }
-
-    function showToast(msg) {
-      document.getElementById('toast-msg').innerText = msg;
-      const toast = document.getElementById('toast');
-      toast.classList.remove('translate-y-20', 'opacity-0');
-      setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); }, 2800);
-    }
-
-    function copyText(text, label) {
-      navigator.clipboard.writeText(text);
-      showToast(`คัดลอก ${label} เรียบร้อยแล้ว`);
-    }
-
-    function shareConfigToPartner() {
-      const baseUrl = window.location.origin + window.location.pathname;
-      const params = new URLSearchParams();
-      params.set('mode', botMode);
-      if (eventUrl) params.set('event', eventUrl);
-      params.set('h', saleHour);
-      params.set('m', saleMin);
-      const shareUrl = `${baseUrl}?${params.toString()}`;
-      navigator.clipboard.writeText(shareUrl);
-      showToast('คัดลอกลิงก์พร้อมการตั้งค่างานนี้ส่งให้แฟนแล้ว!');
-    }
-
-    function selectBotMode(mode) {
-      botMode = mode;
-      const ttm = document.getElementById('mode-card-ttm');
-      const melon = document.getElementById('mode-card-melon');
-      
-      ttm.className = 'cursor-pointer rounded-xl p-5 border-2 border-borderDark bg-bgInput/50 hover:border-gray-600 text-center transition relative overflow-hidden';
-      ttm.innerHTML = `<div class="flex justify-center mb-2 text-pastelPurple"><i data-lucide="ticket" class="w-8 h-8"></i></div>
-            <div class="font-semibold text-gray-100 text-base">ThaiTicketMajor (TTM)</div>
-            <div class="text-xs text-gray-400 mt-1.5">ดักรีเฟรชเปิดขาย + จับเลขที่นั่งว่างทุกสีราคา + กดยืนยันอัตโนมัติ</div>`;
-            
-      melon.className = 'cursor-pointer rounded-xl p-5 border-2 border-borderDark bg-bgInput/50 hover:border-gray-600 text-center transition relative overflow-hidden';
-      melon.innerHTML = `<div class="flex justify-center mb-2 text-pastelPink"><i data-lucide="music" class="w-8 h-8"></i></div>
-            <div class="font-semibold text-gray-100 text-base">Ticketmelon</div>
-            <div class="text-xs text-gray-400 mt-1.5">ดักปุ่ม Buy Tickets / Get Tickets ทันทีที่เปิดขาย</div>`;
-
-      if (mode === 'ttm') {
-        ttm.className = 'cursor-pointer rounded-xl p-5 border-2 border-pastelPurple bg-purple-900/10 text-center transition relative overflow-hidden';
-        ttm.innerHTML += `<div class="absolute top-0 right-0 bg-pastelPurple text-purple-950 text-[10px] font-bold px-2 py-1 rounded-bl-lg">เลือกอยู่</div>`;
-      } else {
-        melon.className = 'cursor-pointer rounded-xl p-5 border-2 border-pastelPink bg-pink-900/10 text-center transition relative overflow-hidden';
-        melon.innerHTML += `<div class="absolute top-0 right-0 bg-pastelPink text-pink-950 text-[10px] font-bold px-2 py-1 rounded-bl-lg">เลือกอยู่</div>`;
-      }
-      lucide.createIcons();
-      markUnsaved();
-    }
-
-    function renderPriorities() {
-      const container = document.getElementById('priority-tags-list');
-      if (priorities.length === 0) {
-        container.innerHTML = '<span class="text-gray-500 text-sm">ยังไม่มีโซนเป้าหมาย...</span>';
-        return;
-      }
-      container.innerHTML = priorities.map((p, i) => `
-        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-bgInput border border-borderDark text-xs font-medium text-gray-200">
-          <span class="text-pastelPurple font-bold">ลำดับ ${i+1}</span> : ${p}
-          <button onclick="removePriority(${i})" class="text-gray-500 hover:text-red-400 ml-2"><i data-lucide="x" class="w-3 h-3"></i></button>
-        </span>
-      `).join('');
-      lucide.createIcons();
-    }
-
-    function addPriority() {
-      const val = document.getElementById('input-priority').value.trim().toUpperCase();
-      if (val) {
-        priorities.push(val);
-        document.getElementById('input-priority').value = '';
-        renderPriorities();
-        markUnsaved();
-      }
-    }
-
-    function removePriority(idx) {
-      priorities.splice(idx, 1);
-      renderPriorities();
-      markUnsaved();
-    }
-
-    function renderBuyers() {
-      const container = document.getElementById('buyer-list-container');
-      const dashQuick = document.getElementById('dashboard-quick-copy');
-      document.getElementById('stat-buyers').innerText = buyers.length;
-
-      container.innerHTML = buyers.map((b, i) => `
-        <div class="bg-bgInput border border-borderDark rounded-xl p-4 flex flex-col justify-between gap-2">
-          <div class="flex justify-between items-start">
-            <div class="font-semibold text-gray-200 text-sm flex items-center gap-2">
-              <i data-lucide="user" class="w-4 h-4 text-pastelPink"></i> ${b.name}
-            </div>
-            <button onclick="removeBuyer(${i})" class="text-gray-600 hover:text-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-          </div>
-          <div class="text-xs text-gray-400 space-y-1">
-            <p>อีเมล: ${b.email}</p>
-            <p>โทร: ${b.phone} • ชำระเงิน: ${b.card}</p>
-          </div>
-        </div>
-      `).join('');
-
-      dashQuick.innerHTML = buyers.map(b => `
-        <div class="bg-bgInput border border-borderDark rounded-xl p-4 space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="font-semibold text-sm text-gray-100">${b.name}</span>
-            <span class="text-[11px] text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/50">${b.card}</span>
-          </div>
-          <div class="grid grid-cols-3 gap-2">
-            <button onclick="copyText('${b.name}', 'ชื่อ-นามสกุล')" class="py-2 rounded-lg bg-[#0a0c10] hover:bg-gray-800 border border-borderDark text-xs text-gray-200 flex items-center justify-center gap-1">
-              <i data-lucide="copy" class="w-3.5 h-3.5 text-pastelPurple"></i> ชื่อ
-            </button>
-            <button onclick="copyText('${b.phone}', 'เบอร์โทร')" class="py-2 rounded-lg bg-[#0a0c10] hover:bg-gray-800 border border-borderDark text-xs text-gray-200 flex items-center justify-center gap-1">
-              <i data-lucide="copy" class="w-3.5 h-3.5 text-pastelPink"></i> เบอร์โทร
-            </button>
-            <button onclick="copyText('${b.email}', 'อีเมล')" class="py-2 rounded-lg bg-[#0a0c10] hover:bg-gray-800 border border-borderDark text-xs text-gray-200 flex items-center justify-center gap-1">
-              <i data-lucide="copy" class="w-3.5 h-3.5 text-sky-400"></i> อีเมล
-            </button>
-          </div>
-        </div>
-      `).join('');
-
-      lucide.createIcons();
-    }
-
-    function addBuyer() {
-      const name = document.getElementById('b-name').value.trim();
-      const email = document.getElementById('b-email').value.trim();
-      const phone = document.getElementById('b-phone').value.trim();
-      const card = document.getElementById('b-card').value.trim();
-      
-      if (!name) return alert('กรุณากรอกชื่อ-นามสกุลครับ');
-      buyers.push({ name, email: email || '-', phone: phone || '-', card: card || 'QR พร้อมเพย์' });
-      ['b-name', 'b-email', 'b-phone', 'b-card'].forEach(id => document.getElementById(id).value = '');
-      renderBuyers();
-      markUnsaved();
-    }
-
-    function removeBuyer(idx) {
-      buyers.splice(idx, 1);
-      renderBuyers();
-      markUnsaved();
-    }
-
-    function renderDevices() {
-      const container = document.getElementById('device-list-container');
-      container.innerHTML = devices.map(d => `
-        <div class="bg-bgInput border border-borderDark rounded-xl p-4 flex items-start gap-4">
-          <div class="bg-[#0a0c10] p-3 rounded-full text-sky-400 border border-borderDark shrink-0 mt-1">
-            <i data-lucide="${d.icon}" class="w-6 h-6"></i>
-          </div>
-          <div class="space-y-1">
-            <div class="font-semibold text-gray-200 text-sm">${d.name}</div>
-            <div class="text-xs text-emerald-400">${d.os}</div>
-            <div class="text-xs text-gray-400">${d.ip}</div>
-          </div>
-        </div>
-      `).join('');
-      lucide.createIcons();
-    }
-
-    function updateDashboardSummary() {
-      document.getElementById('dash-platform').innerText = botMode === 'ttm' ? 'ThaiTicketMajor' : 'Ticketmelon';
-      document.getElementById('dash-event-id').innerText = eventUrl || 'ยังไม่ได้ตั้งค่า';
-      document.getElementById('dash-sale-time').innerText = `เปิดขาย: ${String(saleHour).padStart(2,'0')}:${String(saleMin).padStart(2,'0')} น.`;
-      document.getElementById('dash-top-zone').innerText = priorities.length > 0 ? priorities.join(' ➔ ') : 'ไม่ระบุโซน';
-      document.getElementById('dash-row-pref').innerText = preferredRows ? `ล็อกแถว: ${preferredRows}` : 'แถว: ทุกแถวที่ว่าง';
-      document.getElementById('dash-auto-confirm').innerText = autoConfirm ? 'กดเลือก + ยืนยันทันที' : 'เลือกให้แล้วรอเรากดยืนยัน';
-    }
-
-    function saveAllSettings() {
-      document.getElementById('unsaved-badge').classList.add('hidden');
-      document.getElementById('unsaved-badge').classList.remove('inline-flex');
-      
-      eventUrl = document.getElementById('input-event-id').value.trim();
-      saleHour = parseInt(document.getElementById('input-sale-hour').value || '10', 10);
-      saleMin = parseInt(document.getElementById('input-sale-min').value || '0', 10);
-      autoConfirm = document.getElementById('input-auto-confirm').value === 'true';
-      preferredRows = document.getElementById('input-preferred-rows').value.trim().toUpperCase();
-
-      localStorage.setItem('dear_sniper_config_v3', JSON.stringify({
-        botMode,
-        eventUrl,
-        saleHour,
-        saleMin,
-        autoConfirm,
-        preferredRows,
-        priorities,
-        buyers
-      }));
-
-      updateDashboardSummary();
-      generateScript();
-      showToast('บันทึกถาวรและสร้างโค้ดสคริปต์ v3.0 เรียบร้อยแล้ว!');
-      switchMainTab('script');
-    }
-
-    function openTargetEvent() {
-      if (eventUrl && eventUrl.startsWith('http')) {
-        window.open(eventUrl, '_blank');
-      } else if (botMode === 'ttm') {
-        window.open('https://www.thaiticketmajor.com/concert/', '_blank');
-      } else {
-        window.open('https://www.ticketmelon.com/', '_blank');
-      }
-    }
-
-    function generateScript() {
-      const label = document.getElementById('script-target-label');
-      const box = document.getElementById('generated-script-box');
-      const rowList = preferredRows ? preferredRows.split(',').map(r => r.trim()).filter(Boolean) : [];
-
-      if (botMode === 'ttm') {
-        label.innerText = `ThaiTicketMajor v3.0 (${String(saleHour).padStart(2,'0')}:${String(saleMin).padStart(2,'0')} น.)`;
-        box.textContent = `// ==UserScript==
-// @name         Ticket Sniper - ThaiTicketMajor v3.0 (Permanent)
-// @namespace    http://tampermonkey.net/
-// @version      3.0
-// @description  ตรวจจับเลขที่นั่งว่างทุกสีราคา (01-99) + เลือกแถวเป้าหมาย + กดยืนยันอัตโนมัติ
-// @match        https://*.thaiticketmajor.com/*
-// @run-at       document-end
-// @grant        none
-// ==/UserScript==
-
-(function() {
-    'use strict';
-
-    const TARGET_HOUR = ${saleHour};
-    const TARGET_MIN = ${saleMin};
-    const AUTO_CONFIRM = ${autoConfirm};
-    const PRIORITY_ZONES = ${JSON.stringify(priorities)};
-    const PREFERRED_ROWS = ${JSON.stringify(rowList)};
-
-    const badge = document.createElement('div');
-    badge.style = 'position:fixed;top:10px;left:10px;background:#7e22ce;color:#fff;padding:8px 14px;border-radius:20px;z-index:9999999;font-size:13px;font-weight:bold;box-shadow:0 3px 6px rgba(0,0,0,0.4);pointer-events:none;font-family:sans-serif;';
-    badge.innerText = 'Ticket Sniper v3.0: พร้อมทำงาน...';
-    document.body.appendChild(badge);
-
-    const url = window.location.href;
-    const text = document.body.innerText || '';
-
-    // 1. หน้าข้อมูลงาน (รอเวลาเปิดขาย)
-    if (url.includes('/performance/') || url.includes('/concert/')) {
-        const isComingSoon = Array.from(document.querySelectorAll('*')).some(el => (el.innerText || '').trim() === 'COMING SOON' && el.offsetParent !== null);
-        if (isComingSoon) {
-            const now = new Date();
-            const isNearSale = (now.getHours() === TARGET_HOUR && now.getMinutes() === TARGET_MIN) ||
-                               (now.getHours() === (TARGET_MIN === 0 ? TARGET_HOUR - 1 : TARGET_HOUR) && now.getMinutes() === (TARGET_MIN === 0 ? 59 : TARGET_MIN - 1) && now.getSeconds() >= 50);
-            badge.innerText = isNearSale ? '🔥 ใกล้เปิดขาย! รีเฟรชด่วน...' : '⏳ รอเปิดขาย (' + TARGET_HOUR + ':' + String(TARGET_MIN).padStart(2,'0') + ')';
-            setTimeout(() => window.location.reload(), isNearSale ? 800 : 4000);
-            return;
-        }
-        const buyBtn = Array.from(document.querySelectorAll('a, button')).find(el => {
-            const t = (el.innerText || '').trim();
-            return (t === 'ซื้อบัตร' || t.includes('Buy Ticket')) && !el.className.includes('disabled') && el.offsetParent !== null;
-        });
-        if (buyBtn) {
-            badge.style.background = '#10b981';
-            badge.innerText = '🎯 เปิดขายแล้ว! กำลังกดเข้าซื้อ...';
-            buyBtn.click();
-        }
-        return;
-    }
-
-    // 2. หน้าเลือกโซน (ขั้นตอนที่ 1/4)
-    if (text.includes('1/4') || url.includes('zones.php')) {
-        badge.innerText = '🗺️ เลือกโซนเป้าหมาย: ' + (PRIORITY_ZONES.join(' ➔ ') || 'แตะเลือกโซนได้เลย');
-        return;
-    }
-
-    // 3. หน้าเลือกที่นั่ง (ขั้นตอนที่ 2/4) - ตรวจจับเลขที่นั่งว่างทุกสีราคา
-    if (text.includes('2/4') || text.includes('เลือกที่นั่ง') || url.includes('seats.php')) {
-        badge.innerText = '🔍 สแกนหาที่นั่งว่าง...';
-
-        let attempts = 0;
-        const scanInterval = setInterval(() => {
-            attempts++;
-
-            // ค้นหาตัวเลขที่นั่งในผัง SVG (เฉพาะที่นั่งว่างจะมีเลข 1-2 หลัก เช่น 08 และไม่มีป้ายห้ามสีแดง)
-            const availableSeats = Array.from(document.querySelectorAll('svg text')).filter(t => {
-                const val = (t.textContent || '').trim();
-                if (!/^\\d{1,2}$/.test(val)) return false;
-
-                const parentG = t.closest('g');
-                if (!parentG) return false;
-
-                const html = parentG.innerHTML.toLowerCase();
-                const isBlocked = html.includes('red') || html.includes('#ff') || html.includes('#e1') || html.includes('not') || html.includes('sold');
-                return !isBlocked;
-            });
-
-            // รองรับโซนที่ใช้ element ทั่วไป
-            const fallbackSeats = Array.from(document.querySelectorAll('[onclick*="seat"], [onclick*="Seat"], .seat-available')).filter(el => {
-                const cls = (el.getAttribute('class') || '').toLowerCase();
-                const fill = (el.getAttribute('fill') || '').toLowerCase();
-                return !cls.includes('not') && !cls.includes('sold') && !cls.includes('disable') && !fill.includes('red');
-            });
-
-            let chosenSeat = null;
-
-            // ถ้ามีการล็อกแถวที่ต้องการ ให้หาในแถวนั้นก่อน
-            if (PREFERRED_ROWS.length > 0 && availableSeats.length > 0) {
-                chosenSeat = availableSeats.find(s => {
-                    const g = s.closest('g');
-                    const info = ((g && (g.id || g.getAttribute('data-row') || g.getAttribute('title'))) || '').toUpperCase();
-                    return PREFERRED_ROWS.some(r => info.includes(r));
-                });
-            }
-
-            if (!chosenSeat) {
-                chosenSeat = availableSeats[0] || fallbackSeats[0];
-            }
-
-            if (chosenSeat) {
-                clearInterval(scanInterval);
-                const seatNum = (chosenSeat.textContent || '').trim() || 'ว่าง';
-                badge.style.background = '#10b981';
-                badge.innerText = '🎯 เจอที่นั่ง (' + seatNum + ')! กำลังกดเลือก...';
-
-                const group = chosenSeat.closest('g') || chosenSeat;
-                const circle = group.querySelector('circle, rect') || group;
-
-                [chosenSeat, circle, group].forEach(el => {
-                    ['mousedown', 'mouseup', 'click'].forEach(evt => {
-                        el.dispatchEvent(new MouseEvent(evt, { bubbles: true, cancelable: true, view: window }));
-                    });
-                    if (typeof el.click === 'function') el.click();
-                });
-
-                if (AUTO_CONFIRM) {
-                    setTimeout(() => {
-                        const confirmBtn = Array.from(document.querySelectorAll('button, a, input[type="button"]')).find(b => {
-                            const txt = (b.innerText || b.value || '').trim();
-                            return txt.includes('ยืนยันที่นั่ง') || txt.includes('ยืนยัน') || txt.includes('Confirm');
-                        });
-                        if (confirmBtn) {
-                            badge.innerText = '✅ กดยืนยันที่นั่งเรียบร้อย!';
-                            confirmBtn.click();
-                        }
-                    }, 350);
-                } else {
-                    badge.innerText = '✅ เลือกที่นั่ง (' + seatNum + ') แล้ว กดยืนยันได้เลย';
-                }
-                return;
-            }
-
-            if (attempts >= 12) {
-                clearInterval(scanInterval);
-                badge.style.background = '#dc2626';
-                badge.innerText = '❌ โซนนี้เต็ม กด "< เลือกโซนอื่น" ได้เลย';
-            }
-        }, 200);
-    }
-})();`;
-      } else {
-        label.innerText = `Ticketmelon v3.0 (${String(saleHour).padStart(2,'0')}:${String(saleMin).padStart(2,'0')} น.)`;
-        box.textContent = `// ==UserScript==
-// @name         Ticket Sniper - Ticketmelon v3.0 (Permanent)
-// @namespace    http://tampermonkey.net/
-// @version      3.0
-// @description  ดักปุ่ม Buy Tickets / Get Tickets ทันทีที่เปิดขายบน Ticketmelon
-// @match        https://*.ticketmelon.com/*
-// @run-at       document-end
-// @grant        none
-// ==/UserScript==
-
-(function() {
-    'use strict';
-    const badge = document.createElement('div');
-    badge.style = 'position:fixed;top:10px;left:10px;background:#db2777;color:#fff;padding:8px 14px;border-radius:20px;z-index:9999999;font-size:13px;font-weight:bold;box-shadow:0 3px 6px rgba(0,0,0,0.4);pointer-events:none;font-family:sans-serif;';
-    badge.innerText = 'Ticketmelon Sniper v3.0: เฝ้าหน้าจอ...';
-    document.body.appendChild(badge);
-
-    const timer = setInterval(() => {
-        const buyBtn = Array.from(document.querySelectorAll('button, a')).find(el => {
-            const t = (el.innerText || '').toLowerCase();
-            return (t.includes('buy tickets') || t.includes('ซื้อบัตร') || t.includes('get tickets')) && !el.disabled && el.offsetParent !== null;
-        });
-        if (buyBtn) {
-            badge.style.background = '#10b981';
-            badge.innerText = '🎯 เจอปุ่มซื้อบัตร! กดทันที...';
-            buyBtn.click();
-            clearInterval(timer);
-        }
-    }, 300);
-})();`;
-      }
-    }
-
-    function copyGeneratedScript() {
-      const code = document.getElementById('generated-script-box').textContent;
-      navigator.clipboard.writeText(code);
-      showToast('คัดลอกโค้ดสคริปต์ v3.0 เรียบร้อยแล้ว!');
-    }
-
-    // เริ่มต้นทำงาน
-    selectBotMode(botMode);
-    document.getElementById('unsaved-badge').classList.add('hidden');
-    renderPriorities();
-    renderBuyers();
-    renderDevices();
-    updateDashboardSummary();
-    generateScript();
-    lucide.createIcons();
-  </script>
-</body>
-</html>
+      document.getElementById('unsaved-badge').

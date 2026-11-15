@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TTM 2026 Concert Bot - Control Panel</title>
+  <title>ระบบเลขาเดียร์ - ผู้ช่วยจัดการข้อมูลการจองบัตร</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,645 +17,402 @@
             mono: ['JetBrains Mono', 'monospace'],
           },
           colors: {
-            bgMain: '#0a0c0e',
-            bgCard: '#14171a',
-            bgInput: '#1d2126',
-            borderDark: '#262b32',
+            bgMain: '#0a0c10',
+            bgCard: '#12151c',
+            bgInput: '#1a1f28',
+            borderDark: '#262d3a',
+            pastelPink: '#f9a8d4',
+            pastelPurple: '#d8b4fe',
             emeraldMain: '#10b981',
             emeraldHover: '#059669',
-            cyanTitle: '#2dd4bf',
           }
         }
       }
     }
   </script>
   <style>
-    body { background-color: #0a0c0e; color: #e5e7eb; }
+    body { background-color: #0a0c10; color: #e5e7eb; }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #14171a; }
-    ::-webkit-scrollbar-thumb { background: #2d333b; border-radius: 3px; }
+    ::-webkit-scrollbar-track { background: #12151c; }
+    ::-webkit-scrollbar-thumb { background: #262d3a; border-radius: 3px; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
+<body class="min-h-screen flex flex-col antialiased selection:bg-pastelPurple/30 selection:text-pastelPurple">
 
-  <!-- Top Navigation -->
-  <header class="border-b border-borderDark bg-[#0e1114] sticky top-0 z-30">
+  <!-- แถบเมนูด้านบน -->
+  <header class="border-b border-borderDark bg-[#0a0c10]/90 backdrop-blur sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
-      <nav class="flex items-center space-x-6 h-full">
-        <button onclick="switchMainTab('dashboard')" id="nav-dashboard" class="main-nav-btn h-full flex items-center gap-2 text-sm font-medium border-b-2 border-emeraldMain text-emeraldMain transition">
+      <div class="flex items-center gap-2 text-pastelPink font-bold text-lg">
+        <i data-lucide="ticket"></i> ระบบเลขาเดียร์
+      </div>
+      <nav class="flex items-center space-x-2 sm:space-x-6 h-full">
+        <button onclick="switchMainTab('dashboard')" id="nav-dashboard" class="main-nav-btn h-full flex items-center gap-2 text-sm font-medium border-b-2 border-pastelPurple text-pastelPurple transition px-2">
           <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-          <span>Dashboard</span>
+          <span>สถานะระบบ</span>
         </button>
-        <button onclick="switchMainTab('setup')" id="nav-setup" class="main-nav-btn h-full flex items-center gap-2 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-200 transition">
+        <button onclick="switchMainTab('setup')" id="nav-setup" class="main-nav-btn h-full flex items-center gap-2 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-200 transition px-2">
           <i data-lucide="settings" class="w-4 h-4"></i>
-          <span>Bot Setup</span>
-        </button>
-        <button onclick="switchMainTab('proxy')" id="nav-proxy" class="main-nav-btn h-full flex items-center gap-2 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-200 transition">
-          <i data-lucide="shield-check" class="w-4 h-4"></i>
-          <span>Proxy Checker</span>
+          <span>ตั้งค่าข้อมูล</span>
         </button>
       </nav>
       <div class="hidden sm:flex items-center gap-2 text-xs text-gray-400">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span>UI Prototype v2.6</span>
+        <span>MatePad 11.5 & PC Ready</span>
       </div>
     </div>
   </header>
 
-  <!-- Main Content Container -->
+  <!-- พื้นที่แสดงผลหลัก -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
 
     <!-- ========================================== -->
-    <!-- VIEW 1: DASHBOARD                          -->
+    <!-- หน้า 1: แดชบอร์ด (DASHBOARD)              -->
     <!-- ========================================== -->
     <section id="view-dashboard" class="space-y-6">
-      <!-- Header -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 class="text-2xl sm:text-3xl font-bold text-cyanTitle tracking-tight">TTM 2026 Concert Bot</h1>
-          <div class="flex flex-wrap items-center gap-3 mt-1.5 text-xs text-gray-400">
-            <span class="flex items-center gap-1.5">
-              <span class="w-2.5 h-2 rounded-sm bg-pink-500 inline-block"></span>
-              Event ID: <strong id="dash-event-id" class="text-gray-300 font-normal">ยังไม่ได้ตั้งค่า</strong>
-            </span>
-            <span>•</span>
-            <span>Last sync: <span id="dash-last-sync">21:00:59</span></span>
-          </div>
+          <h1 class="text-2xl sm:text-3xl font-bold text-gray-100 tracking-tight">แดชบอร์ดสรุปการทำงาน</h1>
+          <p class="text-xs text-gray-400 mt-1">หน้าจอควบคุมหลักสำหรับตรวจสอบเป้าหมายงาน ข้อมูลผู้ซื้อ และจำลองสถานะการทำงาน</p>
         </div>
-        <div>
+        <div class="flex items-center gap-2">
           <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-emerald-950/60 text-emerald-400 border border-emerald-800/60">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            Connected
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span> พร้อมใช้งาน
           </span>
         </div>
       </div>
 
-      <!-- 5 Stat Cards -->
-      <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
+      <!-- การ์ดสรุปสถานะ 4 ช่อง -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="bg-bgCard border border-borderDark rounded-xl p-4 flex flex-col justify-between">
-          <span class="text-xs text-gray-400">Active Workers</span>
-          <div id="stat-workers" class="text-3xl font-bold text-cyan-400 my-2">8</div>
-          <span class="text-[11px] text-gray-500">Active daemon containers</span>
+          <span class="text-xs text-gray-400">เป้าหมายงาน (Event)</span>
+          <div id="dash-event-id" class="text-lg font-bold text-pastelPurple my-2 truncate">ยังไม่ได้ตั้งค่า</div>
+          <span class="text-[10px] text-gray-500">รหัสงานคอนเสิร์ตที่ตั้งไว้</span>
         </div>
         <div class="bg-bgCard border border-borderDark rounded-xl p-4 flex flex-col justify-between">
-          <span class="text-xs text-gray-400">Success Orders</span>
-          <div id="stat-orders" class="text-3xl font-bold text-emerald-400 my-2">0</div>
-          <span class="text-[11px] text-emerald-500/80">Auto-stopping triggered</span>
+          <span class="text-xs text-gray-400">อุปกรณ์ที่ตั้งค่าไว้</span>
+          <div class="text-2xl font-bold text-sky-400 my-2"><span id="stat-browsers">2</span> <span class="text-sm font-normal text-gray-500">เครื่อง</span></div>
+          <span class="text-[10px] text-gray-500">MatePad & คอมพิวเตอร์แฟน</span>
         </div>
         <div class="bg-bgCard border border-borderDark rounded-xl p-4 flex flex-col justify-between">
-          <span class="text-xs text-gray-400">Proxies (Active / Total)</span>
-          <div class="text-3xl font-bold my-2"><span id="stat-proxy-active" class="text-emerald-400">0</span> <span class="text-gray-600 text-xl">/ <span id="stat-proxy-total">0</span></span></div>
-          <span class="text-[11px] text-gray-500">All proxies healthy</span>
+          <span class="text-xs text-gray-400">โปรไฟล์ผู้ซื้อ</span>
+          <div class="text-2xl font-bold text-pastelPink my-2"><span id="stat-buyers">2</span> <span class="text-sm font-normal text-gray-500">คน</span></div>
+          <span class="text-[10px] text-gray-500">ข้อมูลสำหรับคัดลอกกรอกด่วน</span>
         </div>
         <div class="bg-bgCard border border-borderDark rounded-xl p-4 flex flex-col justify-between">
-          <span class="text-xs text-gray-400">Browser & Buyer Profiles</span>
-          <div class="my-2 space-y-0.5">
-            <div class="text-sm font-semibold text-indigo-400"><span id="stat-browsers">6</span> <span class="text-gray-400 font-normal text-xs">Browsers</span></div>
-            <div class="text-sm font-semibold text-purple-400"><span id="stat-buyers">0</span> <span class="text-gray-400 font-normal text-xs">Buyers (Cards)</span></div>
-          </div>
-          <span class="text-[11px] text-gray-500">Active configs in Redis</span>
-        </div>
-        <div class="col-span-2 lg:col-span-1 bg-bgCard border border-borderDark rounded-xl p-4 flex flex-col justify-between">
-          <span class="text-xs text-gray-400">System Status</span>
-          <div id="stat-sys-status" class="text-2xl font-bold text-amber-400 my-2 tracking-wide">STANDBY</div>
-          <span id="stat-sys-sub" class="text-[11px] text-gray-500">Press START to launch bots</span>
+          <span class="text-xs text-gray-400">สถานะระบบ</span>
+          <div id="stat-sys-status" class="text-xl font-bold text-amber-400 my-2">สแตนด์บาย</div>
+          <span class="text-[10px] text-gray-500">กดปุ่มเริ่มเพื่อทดสอบระบบ</span>
         </div>
       </div>
 
-      <!-- Control Buttons -->
+      <!-- ปุ่มควบคุม -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <button onclick="startWorkers()" class="w-full py-3.5 px-6 rounded-xl bg-emeraldMain hover:bg-emeraldHover text-white font-semibold text-sm tracking-wide shadow-lg shadow-emerald-950/50 transition active:scale-[0.99]">
-          START ALL WORKERS
+        <button onclick="startWorkers()" class="w-full py-4 rounded-xl bg-pastelPurple hover:bg-purple-400 text-purple-950 font-bold text-sm shadow-lg shadow-pastelPurple/20 transition active:scale-[0.99] flex justify-center items-center gap-2">
+          <i data-lucide="play" class="w-4 h-4"></i> เริ่มจำลองการทำงาน (START)
         </button>
-        <button onclick="stopWorkers()" class="w-full py-3.5 px-6 rounded-xl bg-[#e13b3b] hover:bg-red-600 text-white font-semibold text-sm tracking-wide shadow-lg shadow-red-950/40 transition active:scale-[0.99]">
-          STOP ALL WORKERS
+        <button onclick="stopWorkers()" class="w-full py-4 rounded-xl bg-[#e13b3b] hover:bg-red-600 text-white font-bold text-sm shadow-lg shadow-red-900/20 transition active:scale-[0.99] flex justify-center items-center gap-2">
+          <i data-lucide="square" class="w-4 h-4"></i> หยุดการทำงาน (STOP)
         </button>
       </div>
 
-      <!-- Live Logs -->
+      <!-- กล่องบันทึกการทำงาน -->
       <div class="bg-bgCard border border-borderDark rounded-xl p-5">
         <div class="flex items-center justify-between mb-3">
-          <h2 class="text-base font-semibold text-gray-100">Live Logs</h2>
-          <button onclick="clearLogs()" class="text-xs text-gray-400 hover:text-gray-200">Clear</button>
+          <div>
+            <h2 class="text-base font-semibold text-gray-100">บันทึกการทำงาน (System Logs)</h2>
+            <p class="text-xs text-gray-500">แสดงสถานะลำดับขั้นตอนการทำงานและการตรวจสอบข้อมูลที่ตั้งค่าไว้</p>
+          </div>
+          <button onclick="clearLogs()" class="text-xs text-gray-400 hover:text-gray-200 bg-bgInput px-3 py-1.5 rounded-lg border border-borderDark">ล้างหน้าจอ</button>
         </div>
-        <div id="live-logs-box" class="bg-[#090b0d] border border-borderDark rounded-lg p-4 h-72 overflow-y-auto font-mono text-xs space-y-1.5 text-gray-300">
-          <!-- Populated by JS -->
+        <div id="live-logs-box" class="bg-[#050608] border border-borderDark rounded-lg p-4 h-64 overflow-y-auto font-mono text-xs space-y-2 text-gray-300">
+          <div class="text-gray-500">พร้อมทำงาน... กดปุ่ม "ตั้งค่าข้อมูล" เพื่อใส่รายละเอียดงาน หรือกด "เริ่มจำลองการทำงาน"</div>
         </div>
       </div>
     </section>
 
     <!-- ========================================== -->
-    <!-- VIEW 2: BOT SETUP (CONFIGURATION)          -->
+    <!-- หน้า 2: ตั้งค่าข้อมูล (CONFIGURATION)      -->
     <!-- ========================================== -->
     <section id="view-setup" class="hidden space-y-5">
-      <!-- Top Title & Unsaved Badge -->
       <div class="flex flex-wrap items-center justify-between gap-3">
-        <h1 class="text-2xl sm:text-3xl font-bold text-cyanTitle tracking-tight">Bot Configuration</h1>
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-bold text-gray-100 tracking-tight">ตั้งค่าข้อมูลเตรียมกดบัตร</h1>
+          <p class="text-xs text-gray-400 mt-1">บันทึกข้อมูลไว้ในเครื่อง (Local Storage) เพื่อความรวดเร็วในการเรียกดูและคัดลอกใช้งานจริง</p>
+        </div>
         <span id="unsaved-badge" class="hidden items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-950/60 text-amber-400 border border-amber-700/50">
-          • มีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก
+          • มีการแก้ไขที่ยังไม่บันทึก
         </span>
       </div>
 
-      <!-- Sub-navigation Pills -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-1">
-        <button onclick="switchConfigTab('basic')" id="cfg-tab-basic" class="cfg-pill px-3.5 py-2 rounded-lg text-xs font-medium flex items-center gap-2 bg-emeraldMain text-white shrink-0">
-          <i data-lucide="sliders" class="w-3.5 h-3.5"></i> Basic
+      <!-- แถบเมนูย่อย -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-2">
+        <button onclick="switchConfigTab('basic')" id="cfg-tab-basic" class="cfg-pill px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 bg-pastelPurple text-purple-950 shrink-0">
+          <i data-lucide="sliders" class="w-4 h-4"></i> ข้อมูลงาน (Basic)
         </button>
-        <button onclick="switchConfigTab('telegram')" id="cfg-tab-telegram" class="cfg-pill px-3.5 py-2 rounded-lg text-xs font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0">
-          <i data-lucide="send" class="w-3.5 h-3.5"></i> Telegram
+        <button onclick="switchConfigTab('priorities')" id="cfg-tab-priorities" class="cfg-pill px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0">
+          <i data-lucide="star" class="w-4 h-4"></i> ลำดับโซน (Zones)
         </button>
-        <button onclick="switchConfigTab('captcha')" id="cfg-tab-captcha" class="cfg-pill px-3.5 py-2 rounded-lg text-xs font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0">
-          <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i> CAPTCHA
+        <button onclick="switchConfigTab('buyers')" id="cfg-tab-buyers" class="cfg-pill px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0">
+          <i data-lucide="credit-card" class="w-4 h-4"></i> ผู้ซื้อ & ข้อมูลกรอกด่วน
         </button>
-        <button onclick="switchConfigTab('proxies')" id="cfg-tab-proxies" class="cfg-pill px-3.5 py-2 rounded-lg text-xs font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0">
-          <i data-lucide="globe" class="w-3.5 h-3.5"></i> Proxies
+        <button onclick="switchConfigTab('browser')" id="cfg-tab-browser" class="cfg-pill px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0">
+          <i data-lucide="monitor-smartphone" class="w-4 h-4"></i> อุปกรณ์ (Devices)
         </button>
-        <button onclick="switchConfigTab('buyers')" id="cfg-tab-buyers" class="cfg-pill px-3.5 py-2 rounded-lg text-xs font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0">
-          <i data-lucide="user" class="w-3.5 h-3.5"></i> Buyers
-        </button>
-        <button onclick="switchConfigTab('browser')" id="cfg-tab-browser" class="cfg-pill px-3.5 py-2 rounded-lg text-xs font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0">
-          <i data-lucide="chrome" class="w-3.5 h-3.5"></i> Browser (<span id="browser-tab-count">6</span>)
-        </button>
-        <button onclick="switchConfigTab('priorities')" id="cfg-tab-priorities" class="cfg-pill px-3.5 py-2 rounded-lg text-xs font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0">
-          <i data-lucide="star" class="w-3.5 h-3.5"></i> Priorities
+        <button onclick="switchConfigTab('alert')" id="cfg-tab-alert" class="cfg-pill px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0">
+          <i data-lucide="bell" class="w-4 h-4"></i> แจ้งเตือน (Alerts)
         </button>
       </div>
 
-      <!-- SUB-VIEW: BASIC -->
-      <div id="cfg-panel-basic" class="cfg-panel bg-bgCard border border-borderDark rounded-xl p-6 space-y-5">
-        <h2 class="text-lg font-semibold text-white">Basic Settings</h2>
-        <div class="space-y-2">
-          <label class="block text-xs font-medium text-gray-400 uppercase tracking-wider">BOT MODE / โหมดการทำงาน</label>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div onclick="selectBotMode('ttm')" id="mode-card-ttm" class="cursor-pointer rounded-xl p-5 border border-emeraldMain bg-emerald-950/20 text-center transition">
-              <div class="flex justify-center mb-2 text-pink-500"><i data-lucide="ticket" class="w-6 h-6"></i></div>
-              <div class="font-semibold text-emerald-400 text-sm">ThaiTicketMajor</div>
-              <div class="text-xs text-emerald-500/80 mt-1">GraphQL Bypass (สำหรับบัตรรอบปกติ)</div>
-            </div>
-            <div onclick="selectBotMode('general')" id="mode-card-general" class="cursor-pointer rounded-xl p-5 border border-borderDark bg-bgInput/50 hover:border-gray-600 text-center transition">
-              <div class="flex justify-center mb-2 text-sky-400"><i data-lucide="globe" class="w-6 h-6"></i></div>
-              <div class="font-semibold text-gray-200 text-sm">General Website</div>
-              <div class="text-xs text-gray-500 mt-1">Browser Auto-Clicker (ของเล่น, รองเท้า, แบรนด์เนม)</div>
-            </div>
-          </div>
-        </div>
-        <div class="space-y-1.5">
-          <label class="block text-xs text-gray-400">Event ID</label>
-          <input type="text" id="input-event-id" oninput="markUnsaved()" placeholder="ttm-bkk-blackpink-world-tour-2026" class="w-full bg-bgInput border border-borderDark rounded-lg px-3.5 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-emeraldMain">
-        </div>
-        <div class="space-y-1.5">
-          <label class="block text-xs text-gray-400">Redis URL</label>
-          <input type="text" id="input-redis-url" oninput="markUnsaved()" value="redis://redis:6379/0" class="w-full bg-bgInput border border-borderDark rounded-lg px-3.5 py-2.5 text-sm text-gray-200 font-mono focus:outline-none focus:border-emeraldMain">
-        </div>
-      </div>
-
-      <!-- SUB-VIEW: TELEGRAM -->
-      <div id="cfg-panel-telegram" class="cfg-panel hidden bg-bgCard border border-borderDark rounded-xl p-6 space-y-5">
-        <h2 class="text-lg font-semibold text-white">Telegram Settings</h2>
-        <div class="space-y-1.5">
-          <label class="block text-xs text-gray-400">Bot Token</label>
-          <input type="text" id="input-tg-token" oninput="markUnsaved()" placeholder="YOUR_TELEGRAM_BOT_TOKEN_HERE" class="w-full bg-bgInput border border-borderDark rounded-lg px-3.5 py-2.5 text-sm text-gray-200 font-mono focus:outline-none focus:border-emeraldMain">
-        </div>
-        <div class="space-y-1.5">
-          <label class="block text-xs text-gray-400">Chat ID</label>
-          <input type="text" id="input-tg-chat" oninput="markUnsaved()" placeholder="YOUR_CHAT_ID_HERE" class="w-full bg-bgInput border border-borderDark rounded-lg px-3.5 py-2.5 text-sm text-gray-200 font-mono focus:outline-none focus:border-emeraldMain">
-        </div>
-      </div>
-
-      <!-- SUB-VIEW: CAPTCHA -->
-      <div id="cfg-panel-captcha" class="cfg-panel hidden bg-bgCard border border-borderDark rounded-xl p-6 space-y-4">
-        <h2 class="text-lg font-semibold text-white">CAPTCHA Settings</h2>
-        <div class="space-y-1.5">
-          <label class="block text-xs text-gray-400">2Captcha/CapMonster API Key</label>
-          <input type="text" id="input-captcha-key" oninput="markUnsaved()" placeholder="YOUR_2CAPTCHA_OR_CAPMONSTER_KEY_HERE" class="w-full bg-bgInput border border-borderDark rounded-lg px-3.5 py-2.5 text-sm text-gray-200 font-mono focus:outline-none focus:border-emeraldMain">
-        </div>
-        <p class="text-xs text-amber-400/90 flex items-center gap-1.5">
-          <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
-          แนะนำ CapMonster สำหรับ Turnstile CAPTCHA ที่เร็วกว่า
-        </p>
-      </div>
-
-      <!-- SUB-VIEW: PROXIES QUICK TAB -->
-      <div id="cfg-panel-proxies" class="cfg-panel hidden bg-bgCard border border-borderDark rounded-xl p-6 space-y-4">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-semibold text-white">Proxy Pool Integration</h2>
-            <p class="text-xs text-gray-400 mt-1">จัดการและทดสอบความเร็ว Residential / ISP Proxies สำหรับการเชื่อมต่อ</p>
-          </div>
-          <button onclick="switchMainTab('proxy')" class="px-4 py-2 rounded-lg bg-emeraldMain hover:bg-emeraldHover text-white text-xs font-medium">
-            เปิดหน้า Proxy Checker
-          </button>
-        </div>
-      </div>
-
-      <!-- SUB-VIEW: BUYERS -->
-      <div id="cfg-panel-buyers" class="cfg-panel hidden bg-bgCard border border-borderDark rounded-xl p-6 space-y-5">
-        <h2 class="text-lg font-semibold text-white">Buyer Profiles</h2>
-        <div class="bg-[#181c20] border border-borderDark rounded-xl p-4 space-y-3">
-          <div class="text-xs font-semibold text-indigo-400 flex items-center gap-1.5">
-            <i data-lucide="plus" class="w-3.5 h-3.5"></i> เพิ่มโปรไฟล์ใหม่
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <input type="text" id="buyer-name" placeholder="ชื่อ-นามสกุล *" class="bg-bgInput border border-borderDark rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-emeraldMain">
-            <input type="email" id="buyer-email" placeholder="Email *" class="bg-bgInput border border-borderDark rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-emeraldMain">
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <input type="text" id="buyer-phone" placeholder="เบอร์โทร *" class="bg-bgInput border border-borderDark rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-emeraldMain">
-            <input type="text" id="buyer-thaiid" placeholder="เลขบัตรประชาชน *" class="bg-bgInput border border-borderDark rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-emeraldMain">
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <input type="text" id="buyer-card" placeholder="หมายเลขบัตร *" class="bg-bgInput border border-borderDark rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-emeraldMain">
-            <input type="text" id="buyer-exp" placeholder="MM/YY *" class="bg-bgInput border border-borderDark rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-emeraldMain">
-            <input type="text" id="buyer-cvv" placeholder="CVV *" class="bg-bgInput border border-borderDark rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-emeraldMain">
-          </div>
-          <button onclick="addBuyerProfile()" class="w-full py-2.5 rounded-lg bg-emeraldMain hover:bg-emeraldHover text-white font-medium text-xs transition">
-            Add Profile
-          </button>
-        </div>
-
-        <div id="buyer-list-container" class="text-center py-6 text-xs text-gray-500">
-          ยังไม่มีโปรไฟล์ — กรอกแบบฟอร์มด้านบนเพื่อเพิ่ม
-        </div>
-      </div>
-
-      <!-- SUB-VIEW: BROWSER PROFILES -->
-      <div id="cfg-panel-browser" class="cfg-panel hidden bg-bgCard border border-borderDark rounded-xl p-6 space-y-5">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h2 class="text-lg font-semibold text-white flex items-center gap-2">
-              <i data-lucide="shield" class="w-5 h-5 text-sky-400"></i> Browser Profiles
-            </h2>
-            <p id="browser-summary-text" class="text-xs text-gray-400 mt-0.5">6 profiles • Chrome 4 • Edge 2 • Firefox 0</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <button onclick="resetDefaultBrowsers()" class="px-3 py-1.5 rounded-lg bg-bgInput hover:bg-gray-700 border border-borderDark text-xs text-gray-300 flex items-center gap-1.5">
-              <i data-lucide="package" class="w-3.5 h-3.5 text-amber-400"></i> Load Defaults
-            </button>
-            <button onclick="generateRandomBrowsers(1)" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs text-white font-medium flex items-center gap-1.5">
-              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> สร้างแบบสุ่ม 1 ตัว
-            </button>
-          </div>
-        </div>
-
-        <!-- Warning Banner -->
-        <div class="bg-amber-950/25 border border-amber-700/40 rounded-xl p-4 flex items-start gap-3">
-          <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
-          <div class="text-xs space-y-1">
-            <div class="font-semibold text-amber-300">ความสำคัญของจำนวน Browser Profile (Fingerprint Uniqueness)</div>
-            <p class="text-gray-400 leading-relaxed">
-              เพื่อความปลอดภัยสูงสุดในการกดบัตร แนะนำให้สร้าง Browser Profiles ให้มีจำนวนครอบคลุมหรือมากกว่าจำนวน Proxy/Worker ทั้งหมดที่ใช้งานจริง เพื่อป้องกันการทับซ้อนของลายนิ้วมือเบราว์เซอร์
-            </p>
-          </div>
-        </div>
-
-        <!-- Batch Generator Bar -->
-        <div class="bg-[#181c20] border border-borderDark rounded-xl p-3 flex flex-wrap items-center justify-between gap-3">
-          <div class="flex flex-wrap items-center gap-2">
-            <span class="text-xs text-gray-400 flex items-center gap-1.5 mr-1">
-              <i data-lucide="layers" class="w-3.5 h-3.5 text-indigo-400"></i> สร้างแบบสุ่มหลายตัว
-            </span>
-            <div class="flex items-center gap-1" id="batch-count-btns">
-              <button onclick="setBatchCount(5)" class="batch-btn px-2.5 py-1 rounded text-xs font-medium bg-indigo-600 text-white">5</button>
-              <button onclick="setBatchCount(10)" class="batch-btn px-2.5 py-1 rounded text-xs font-medium bg-bgInput text-gray-400 hover:text-white">10</button>
-              <button onclick="setBatchCount(20)" class="batch-btn px-2.5 py-1 rounded text-xs font-medium bg-bgInput text-gray-400 hover:text-white">20</button>
-              <button onclick="setBatchCount(40)" class="batch-btn px-2.5 py-1 rounded text-xs font-medium bg-bgInput text-gray-400 hover:text-white">40</button>
-              <button onclick="setBatchCount(60)" class="batch-btn px-2.5 py-1 rounded text-xs font-medium bg-bgInput text-gray-400 hover:text-white">60</button>
-            </div>
-            <button onclick="generateRandomBrowsers(selectedBatchCount)" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs text-white font-medium">
-              สร้าง <span id="batch-btn-label">5</span> profiles
-            </button>
-          </div>
-          <button onclick="clearAllBrowsers()" class="px-3 py-1.5 rounded-lg bg-red-950/50 hover:bg-red-900/60 border border-red-800/50 text-xs text-red-400 flex items-center gap-1">
-            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> ล้างทั้งหมด
-          </button>
-        </div>
-
-        <!-- Browser Cards Grid -->
-        <div id="browser-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <!-- Populated by JS -->
-        </div>
-
-        <!-- Export / Import JSON -->
-        <div class="flex items-center gap-2 pt-2">
-          <button onclick="exportBrowsersJSON()" class="px-3 py-1.5 rounded-lg bg-bgInput hover:bg-gray-700 border border-borderDark text-xs text-gray-300 flex items-center gap-1.5">
-            <i data-lucide="download" class="w-3.5 h-3.5 text-sky-400"></i> Export JSON
-          </button>
-          <button onclick="alert('รองรับการนำเข้าไฟล์ JSON โครงสร้าง Browser Profiles')" class="px-3 py-1.5 rounded-lg bg-bgInput hover:bg-gray-700 border border-borderDark text-xs text-gray-300 flex items-center gap-1.5">
-            <i data-lucide="upload" class="w-3.5 h-3.5 text-emerald-400"></i> Import JSON
-          </button>
-        </div>
-      </div>
-
-      <!-- SUB-VIEW: PRIORITIES -->
-      <div id="cfg-panel-priorities" class="cfg-panel hidden bg-bgCard border border-borderDark rounded-xl p-6 space-y-4">
-        <h2 class="text-lg font-semibold text-white">Ticket Priorities</h2>
-        <div class="flex gap-2">
-          <input type="text" id="input-priority" onkeydown="if(event.key==='Enter') addPriority()" placeholder="e.g. VIP, GA, Standing, Premium" class="flex-1 bg-bgInput border border-borderDark rounded-lg px-3.5 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-emeraldMain">
-          <button onclick="addPriority()" class="px-5 py-2.5 rounded-lg bg-emeraldMain hover:bg-emeraldHover text-white font-medium text-sm">
-            Add
-          </button>
-        </div>
-        <div id="priority-tags-list" class="flex flex-wrap gap-2 pt-1">
-          <!-- Populated by JS -->
-        </div>
-        <p class="text-xs text-gray-400 flex items-center gap-1.5 pt-1">
-          <span class="text-pink-500">🎯</span> บอทจะลองซื้อตามลำดับ priority ที่กำหนด
-        </p>
-      </div>
-
-      <!-- Global Save Settings Button -->
-      <button onclick="saveAllSettings()" class="w-full py-3.5 rounded-xl bg-emeraldMain hover:bg-emeraldHover text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/50 transition active:scale-[0.99]">
-        <i data-lucide="save" class="w-4 h-4"></i> บันทึกการตั้งค่า
-      </button>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- VIEW 3: PROXY ROTATOR & HEALTH CHECKER     -->
-    <!-- ========================================== -->
-    <section id="view-proxy" class="hidden space-y-6">
-      <div class="flex flex-wrap items-center justify-between gap-4">
+      <!-- แท็บ 1: ข้อมูลงาน -->
+      <div id="cfg-panel-basic" class="cfg-panel bg-bgCard border border-borderDark rounded-2xl p-5 sm:p-6 space-y-6">
         <div>
-          <h1 class="text-2xl sm:text-3xl font-bold text-cyanTitle tracking-tight">TH TTM Proxy Rotator & Health Checker</h1>
-          <p class="text-xs text-gray-400 mt-1">Production-Grade Residential & ISP Proxy Manager for ThaiTicketMajor</p>
+          <h2 class="text-lg font-semibold text-white">เลือกเว็บไซต์เป้าหมาย (Target Platform)</h2>
+          <p class="text-xs text-gray-500 mt-1">เลือกแพลตฟอร์มที่ต้องการจองบัตร เพื่อจัดรูปแบบข้อมูลและลิงก์ทางลัดให้เหมาะสม</p>
         </div>
-        <button onclick="simulateProxyCheck()" class="px-4 py-2 rounded-lg bg-emeraldMain hover:bg-emeraldHover text-white text-xs font-semibold flex items-center gap-1.5">
-          <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Refresh
-        </button>
-      </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div onclick="selectBotMode('ttm')" id="mode-card-ttm" class="cursor-pointer rounded-xl p-5 border-2 border-pastelPurple bg-purple-900/10 text-center transition relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-pastelPurple text-purple-950 text-[10px] font-bold px-2 py-1 rounded-bl-lg">เลือกอยู่</div>
+            <div class="flex justify-center mb-2 text-pastelPurple"><i data-lucide="ticket" class="w-8 h-8"></i></div>
+            <div class="font-semibold text-gray-100 text-base">ThaiTicketMajor (TTM)</div>
+            <div class="text-xs text-gray-400 mt-1.5">จัดเตรียมลิงก์เข้าหน้าผังและโซนที่ต้องการล่วงหน้า</div>
+          </div>
+          <div onclick="selectBotMode('melon')" id="mode-card-melon" class="cursor-pointer rounded-xl p-5 border-2 border-borderDark bg-bgInput/50 hover:border-gray-600 text-center transition relative overflow-hidden">
+            <div class="flex justify-center mb-2 text-pastelPink"><i data-lucide="music" class="w-8 h-8"></i></div>
+            <div class="font-semibold text-gray-100 text-base">Ticketmelon</div>
+            <div class="text-xs text-gray-400 mt-1.5">เตรียมข้อมูลโปรไฟล์และประเภทบัตรสำหรับกดเลือกทันที</div>
+          </div>
+        </div>
 
-      <!-- 3 Proxy Stat Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="bg-bgCard border border-borderDark rounded-xl p-5 flex items-center justify-between">
-          <div>
-            <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">ACTIVE PROXIES (TH ISP)</div>
-            <div id="px-stat-active" class="text-3xl font-bold text-emerald-400 mt-2">0</div>
-          </div>
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
-        </div>
-        <div class="bg-bgCard border border-borderDark rounded-xl p-5 flex items-center justify-between">
-          <div>
-            <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">DEAD / FILTERED</div>
-            <div id="px-stat-dead" class="text-3xl font-bold text-red-400 mt-2">0</div>
-          </div>
-          <span class="w-2.5 h-2.5 rounded-full bg-red-400 shadow-[0_0_8px_#f87171]"></span>
-        </div>
-        <div class="bg-bgCard border border-borderDark rounded-xl p-5 flex items-center justify-between">
-          <div>
-            <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">TOTAL POOL</div>
-            <div id="px-stat-total" class="text-3xl font-bold text-sky-400 mt-2">0</div>
-          </div>
-          <span class="w-2.5 h-2.5 rounded-full bg-sky-400 shadow-[0_0_8px_#38bdf8]"></span>
+        <div class="space-y-2 border-t border-borderDark pt-5">
+          <label class="block text-sm font-medium text-gray-200">รหัสงานคอนเสิร์ต หรือชื่อลิงก์ (Event ID / Slug)</label>
+          <p class="text-[11px] text-gray-500">ดูได้จากแถบ URL ของหน้างานนั้น เช่น <span class="text-gray-300">thaiticketmajor.com/concert/<span class="text-pastelPurple font-bold">khemjira-welcome-back</span>.html</span> ให้นำส่วนท้ายมาใส่</p>
+          <input type="text" id="input-event-id" oninput="markUnsaved()" placeholder="เช่น khemjira-welcome-back" class="w-full bg-bgInput border border-borderDark rounded-xl px-4 py-3 text-sm text-gray-200 focus:outline-none focus:border-pastelPurple">
         </div>
       </div>
 
-      <!-- Upload & Monitor Split -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <!-- Left Upload Box -->
-        <div class="lg:col-span-4 bg-bgCard border border-borderDark rounded-xl p-5 space-y-4">
-          <h2 class="text-sm font-semibold text-white flex items-center gap-2">
-            <i data-lucide="upload-cloud" class="w-4 h-4 text-sky-400"></i> Upload Proxies
-          </h2>
-          <p class="text-[11px] text-gray-400 leading-relaxed">
-            Paste proxies (one per line). Format:<br>
-            <code class="text-gray-300 font-mono">http://user:pass@host:port</code>
-          </p>
-          <textarea id="proxy-input-area" rows="5" placeholder="http://user:pass@1.1.1.1:8000&#10;http://user-session-{session}:pass@gate.soax.com:9000" class="w-full bg-bgInput border border-borderDark rounded-lg p-3 text-xs font-mono text-gray-200 focus:outline-none focus:border-emeraldMain"></textarea>
-          <div class="flex items-center justify-between gap-3">
-            <label class="text-xs text-gray-400">Session Pool Size:</label>
-            <input type="number" value="40" class="w-24 bg-bgInput border border-borderDark rounded-lg px-3 py-1.5 text-xs text-gray-200 text-right">
-          </div>
-          <button onclick="parseAndCheckProxies()" class="w-full py-2.5 rounded-lg bg-emeraldMain hover:bg-emeraldHover text-white font-semibold text-xs flex items-center justify-center gap-1.5">
-            <i data-lucide="play" class="w-3.5 h-3.5"></i> Save & Start Health Checks
+      <!-- แท็บ 2: ลำดับโซน -->
+      <div id="cfg-panel-priorities" class="cfg-panel hidden bg-bgCard border border-borderDark rounded-2xl p-5 sm:p-6 space-y-6">
+        <div>
+          <h2 class="text-lg font-semibold text-white">ลำดับโซนที่ต้องการ (Zone Priorities)</h2>
+          <p class="text-xs text-gray-500 mt-1">ระบุชื่อโซนตามผังคอนเสิร์ตเรียงตามลำดับความสำคัญ (เช่น VA1, A, B) เพื่อใช้เป็นแผนสำรองเมื่อโซนหลักเต็ม</p>
+        </div>
+        
+        <div class="flex gap-2">
+          <input type="text" id="input-priority" onkeydown="if(event.key==='Enter') addPriority()" placeholder="พิมพ์ชื่อโซน เช่น VA1 แล้วกดปุ่มเพิ่ม" class="flex-1 bg-bgInput border border-borderDark rounded-xl px-4 py-3 text-sm text-gray-200 focus:outline-none focus:border-pastelPurple">
+          <button onclick="addPriority()" class="px-6 py-3 rounded-xl bg-bgInput border border-borderDark hover:bg-gray-800 text-white font-medium text-sm transition">
+            เพิ่มโซน
           </button>
         </div>
+        
+        <div class="bg-[#050608] rounded-xl p-4 min-h-[100px] border border-borderDark">
+          <p class="text-xs text-gray-500 mb-3"><i data-lucide="info" class="inline w-3 h-3"></i> ลำดับโซนเป้าหมายที่ตั้งไว้:</p>
+          <div id="priority-tags-list" class="flex flex-wrap gap-2"></div>
+        </div>
+      </div>
 
-        <!-- Right Monitor Table -->
-        <div class="lg:col-span-8 bg-bgCard border border-borderDark rounded-xl p-5 flex flex-col">
-          <h2 class="text-sm font-semibold text-white flex items-center gap-2 mb-4">
-            <i data-lucide="activity" class="w-4 h-4 text-sky-400"></i> Proxy Pool Monitor
-          </h2>
-          <div class="overflow-x-auto flex-1">
-            <table class="w-full text-left border-collapse">
-              <thead>
-                <tr class="border-b border-borderDark text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
-                  <th class="py-2.5 px-3">PROXY (OBFUSCATED)</th>
-                  <th class="py-2.5 px-3">STATUS</th>
-                  <th class="py-2.5 px-3">EXIT IP</th>
-                  <th class="py-2.5 px-3">ISP / ORGANIZATION</th>
-                  <th class="py-2.5 px-3">LATENCY</th>
-                  <th class="py-2.5 px-3">LAST CHECK</th>
-                </tr>
-              </thead>
-              <tbody id="proxy-table-body" class="text-xs divide-y divide-borderDark/60">
-                <tr>
-                  <td colspan="6" class="py-12 text-center text-gray-500">
-                    No proxies in pool. Paste some on the left.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+      <!-- แท็บ 3: ข้อมูลผู้ซื้อ -->
+      <div id="cfg-panel-buyers" class="cfg-panel hidden bg-bgCard border border-borderDark rounded-2xl p-5 sm:p-6 space-y-6">
+        <div>
+          <h2 class="text-lg font-semibold text-white">ข้อมูลผู้ซื้อและปุ่มคัดลอกด่วน (Quick Copy Profiles)</h2>
+          <p class="text-xs text-gray-500 mt-1">บันทึกชื่อ เบอร์โทร และอีเมลของคุณเดียร์กับแฟนไว้ กดปุ่ม "คัดลอก" เพื่อนำไปวางในหน้ากรอกชื่อผู้เข้าชมได้ทันที</p>
+        </div>
+
+        <div id="buyer-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+        <div class="border-t border-borderDark pt-6">
+          <h3 class="text-sm font-medium text-pastelPink flex items-center gap-2 mb-4"><i data-lucide="plus-circle" class="w-4 h-4"></i> เพิ่มข้อมูลผู้ซื้อใหม่</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">ชื่อ-นามสกุล (สำหรับพิมพ์ลงบนบัตร)</label>
+              <input type="text" id="b-name" placeholder="Thanawat Rueangdee" class="w-full bg-bgInput border border-borderDark rounded-xl px-3 py-2 text-sm text-gray-200 focus:border-pastelPink outline-none">
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">อีเมล (สำหรับรับ E-Ticket)</label>
+              <input type="email" id="b-email" placeholder="example@gmail.com" class="w-full bg-bgInput border border-borderDark rounded-xl px-3 py-2 text-sm text-gray-200 focus:border-pastelPink outline-none">
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">เบอร์โทรศัพท์</label>
+              <input type="text" id="b-phone" placeholder="08XXXXXXXX" class="w-full bg-bgInput border border-borderDark rounded-xl px-3 py-2 text-sm text-gray-200 focus:border-pastelPink outline-none">
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">หมายเหตุ / ช่องทางชำระเงิน</label>
+              <input type="text" id="b-card" placeholder="เช่น QR พร้อมเพย์ / บัตร KBank" class="w-full bg-bgInput border border-borderDark rounded-xl px-3 py-2 text-sm text-gray-200 focus:border-pastelPink outline-none">
+            </div>
+          </div>
+          <button onclick="addBuyer()" class="mt-4 px-6 py-2.5 rounded-xl bg-bgInput border border-borderDark hover:border-pastelPink text-pastelPink font-medium text-sm transition">
+            เพิ่มโปรไฟล์นี้
+          </button>
+        </div>
+      </div>
+
+      <!-- แท็บ 4: อุปกรณ์ -->
+      <div id="cfg-panel-browser" class="cfg-panel hidden bg-bgCard border border-borderDark rounded-2xl p-5 sm:p-6 space-y-6">
+        <div>
+          <h2 class="text-lg font-semibold text-white">การแบ่งหน้าที่อุปกรณ์ (Multi-Device Setup)</h2>
+          <p class="text-xs text-gray-500 mt-1">แนะนำให้แยกอินเทอร์เน็ตระหว่าง <b>Huawei MatePad 11.5</b> กับ <b>คอมพิวเตอร์ของแฟน</b> เพื่อไม่ให้ใช้ IP เดียวกันตอนรอคิว</p>
+        </div>
+        <div id="device-list-container" class="space-y-3"></div>
+      </div>
+
+      <!-- แท็บ 5: แจ้งเตือน -->
+      <div id="cfg-panel-alert" class="cfg-panel hidden bg-bgCard border border-borderDark rounded-2xl p-5 sm:p-6 space-y-6">
+        <div>
+          <h2 class="text-lg font-semibold text-white">การตั้งค่าแจ้งเตือน (Notifications)</h2>
+          <p class="text-xs text-gray-500 mt-1">เก็บค่า Token สำหรับเชื่อมต่อระบบแจ้งเตือนเข้า Telegram หรือ Webhook เมื่อทำรายการสำเร็จ</p>
+        </div>
+        <div class="space-y-4">
+          <div class="bg-bgInput p-4 rounded-xl border border-borderDark">
+            <h3 class="text-sm font-medium text-sky-400 mb-1 flex items-center gap-2"><i data-lucide="send" class="w-4 h-4"></i> Telegram Bot Token</h3>
+            <p class="text-[11px] text-gray-500 mb-3">นำ Token ที่ได้จาก @BotFather ใน Telegram มาบันทึกเก็บไว้</p>
+            <input type="text" id="input-token" oninput="markUnsaved()" placeholder="123456789:ABCdefGHIjklMNOpqrsTUVwxyz" class="w-full bg-[#050608] border border-borderDark rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-sky-400">
+          </div>
+          <div class="bg-bgInput p-4 rounded-xl border border-borderDark">
+            <h3 class="text-sm font-medium text-amber-400 mb-1 flex items-center gap-2"><i data-lucide="hash" class="w-4 h-4"></i> Telegram Chat ID</h3>
+            <p class="text-[11px] text-gray-500 mb-3">ระบุรหัสห้องแชทที่ต้องการให้ส่งข้อความแจ้งเตือน</p>
+            <input type="text" id="input-chatid" oninput="markUnsaved()" placeholder="เช่น -1001234567890" class="w-full bg-[#050608] border border-borderDark rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-amber-400">
           </div>
         </div>
       </div>
+
+      <!-- ปุ่มบันทึก -->
+      <button onclick="saveAllSettings()" class="w-full py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30 transition active:scale-[0.99]">
+        <i data-lucide="save" class="w-5 h-5"></i> บันทึกการตั้งค่าทั้งหมดลงในเครื่อง
+      </button>
     </section>
 
   </main>
 
-  <!-- ========================================== -->
-  <!-- MODAL: EDIT BROWSER PROFILE                -->
-  <!-- ========================================== -->
-  <div id="browser-modal" class="fixed inset-0 bg-black/75 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
-    <div class="bg-[#161a1e] border border-borderDark rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl">
-      <div class="px-5 py-4 border-b border-borderDark flex items-center justify-between">
-        <div>
-          <h3 class="text-sm font-semibold text-white flex items-center gap-2">
-            <i data-lucide="edit-3" class="w-4 h-4 text-amber-400"></i> แก้ไข Browser Profile
-          </h3>
-          <p id="modal-subtitle" class="text-[11px] text-gray-400 mt-0.5">Chrome 130 / Win / Radeon RX 6800 XT</p>
-        </div>
-        <button onclick="closeBrowserModal()" class="text-gray-400 hover:text-white p-1">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-      </div>
-
-      <div class="p-5 space-y-4 max-h-[75vh] overflow-y-auto text-xs">
-        <div class="space-y-1">
-          <label class="text-gray-400">ชื่อ Profile</label>
-          <input type="text" id="modal-prof-name" class="w-full bg-bgInput border border-borderDark rounded-lg px-3 py-2 text-gray-200 font-medium">
-        </div>
-
-        <div class="flex gap-2 border-b border-borderDark pb-3">
-          <span class="px-3 py-1.5 rounded-lg bg-emeraldMain text-white font-medium">Identity</span>
-          <span class="px-3 py-1.5 rounded-lg bg-bgInput text-gray-400">System</span>
-          <span class="px-3 py-1.5 rounded-lg bg-bgInput text-gray-400">Graphics</span>
-        </div>
-
-        <div class="grid grid-cols-3 gap-3">
-          <div class="space-y-1">
-            <label class="text-gray-400">Browser</label>
-            <select id="modal-prof-browser" class="w-full bg-bgInput border border-borderDark rounded-lg px-2.5 py-2 text-gray-200">
-              <option value="Chrome">Chrome</option>
-              <option value="Edge">Edge</option>
-              <option value="Firefox">Firefox</option>
-            </select>
-          </div>
-          <div class="space-y-1">
-            <label class="text-gray-400">Version</label>
-            <input type="text" id="modal-prof-ver" class="w-full bg-bgInput border border-borderDark rounded-lg px-2.5 py-2 text-gray-200">
-          </div>
-          <div class="space-y-1">
-            <label class="text-gray-400">OS</label>
-            <select id="modal-prof-os" class="w-full bg-bgInput border border-borderDark rounded-lg px-2.5 py-2 text-gray-200">
-              <option value="Windows">Windows</option>
-              <option value="macOS">macOS</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="space-y-1">
-          <label class="text-gray-400">User-Agent</label>
-          <input type="text" id="modal-prof-ua" class="w-full bg-bgInput border border-borderDark rounded-lg px-3 py-2 text-gray-300 font-mono text-[11px]">
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div class="space-y-1">
-            <label class="text-gray-400">Platform</label>
-            <input type="text" id="modal-prof-platform" value="Win32" class="w-full bg-bgInput border border-borderDark rounded-lg px-3 py-2 text-gray-200">
-          </div>
-          <div class="space-y-1">
-            <label class="text-gray-400">Accept-Language</label>
-            <input type="text" id="modal-prof-lang" value="th-TH,th;q=0.9,en-US;q=0.8,en;q=0.7" class="w-full bg-bgInput border border-borderDark rounded-lg px-3 py-2 text-gray-200">
-          </div>
-        </div>
-
-        <div class="flex items-center gap-4 pt-1">
-          <label class="flex items-center gap-2 text-gray-300 cursor-pointer">
-            <input type="checkbox" checked class="accent-emeraldMain rounded"> Do Not Track
-          </label>
-          <label class="flex items-center gap-2 text-gray-300 cursor-pointer">
-            <input type="checkbox" class="accent-emeraldMain rounded"> Touch Support
-          </label>
-        </div>
-      </div>
-
-      <div class="px-5 py-3.5 border-t border-borderDark flex justify-end gap-2 bg-[#121518]">
-        <button onclick="closeBrowserModal()" class="px-4 py-2 rounded-lg bg-bgInput text-gray-300 text-xs">ยกเลิก</button>
-        <button onclick="saveBrowserModal()" class="px-4 py-2 rounded-lg bg-emeraldMain hover:bg-emeraldHover text-white font-medium text-xs">บันทึก Profile</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-5 right-5 bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-xs font-medium shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 z-50">
-    บันทึกการตั้งค่าเรียบร้อยแล้ว
+  <!-- Toast แจ้งเตือน -->
+  <div id="toast" class="fixed bottom-5 right-5 bg-gray-800 border border-gray-600 text-white px-5 py-3 rounded-2xl text-sm font-medium shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+    <i data-lucide="check-circle" class="text-emerald-400"></i> <span id="toast-msg">บันทึกเรียบร้อย</span>
   </div>
 
   <script>
-    // Initial Mock State
-    let priorities = ['VIP', 'GA', 'Standing'];
-    let buyers = [];
-    let selectedBatchCount = 5;
-    let editingBrowserIndex = null;
-    let workerInterval = null;
+    // โหลดข้อมูลจาก LocalStorage หากเคยบันทึกไว้
+    const savedData = JSON.parse(localStorage.getItem('dear_ticket_config') || 'null');
 
-    const defaultBrowsers = [
-      { name: 'Chrome 128 / Win / RTX 3060', browser: 'Chrome', version: '128.0.6613.85', os: 'Windows', res: '1920×1080', hw: '10C / 8GB', gpu: 'RTX 3060', ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/128.0.0.0 Safari/537.36' },
-      { name: 'Chrome 130 / Win / Radeon RX 6800 XT', browser: 'Chrome', version: '130.0.6723.58', os: 'Windows', res: '2560×1440', hw: '6C / 4GB', gpu: 'Radeon RX 6800 XT', ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130.0.0.0 Safari/537.36' },
-      { name: 'Chrome 128 / Win / RTX 3080', browser: 'Chrome', version: '128.0.6613.120', os: 'Windows', res: '3840×2160', hw: '24C / 8GB', gpu: 'RTX 3080', ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/128.0.0.0 Safari/537.36' },
-      { name: 'Chrome 131 / Win / Radeon RX 6800', browser: 'Chrome', version: '131.0.6778.33', os: 'Windows', res: '2560×1440', hw: '20C / 16GB', gpu: 'Radeon RX 6800', ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36' },
-      { name: 'Edge 131 / Win / RTX 4090', browser: 'Edge', version: '131.0.2903.51', os: 'Windows', res: '1536×864', hw: '4C / 32GB', gpu: 'RTX 4090', ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Edg/131.0.0.0' },
-      { name: 'Edge 131 / Win / RTX 4080', browser: 'Edge', version: '131.0.2903.48', os: 'Windows', res: '1280×800', hw: '10C / 8GB', gpu: 'RTX 4080', ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Edg/131.0.0.0' }
+    let botMode = savedData?.botMode || 'ttm';
+    let priorities = savedData?.priorities || ['VA1', 'VA2', 'A', 'B'];
+    let buyers = savedData?.buyers || [
+      { id: 1, name: 'Thanawat Rueangdee (คุณเดียร์)', email: 'dear.thanawat@example.com', phone: '08X-XXX-XXXX', card: 'QR พร้อมเพย์' },
+      { id: 2, name: 'โปรไฟล์แฟนคุณเดียร์', email: 'partner@example.com', phone: '09X-XXX-XXXX', card: 'QR พร้อมเพย์' }
     ];
+    let devices = [
+      { icon: 'tablet', name: 'Huawei MatePad 11.5 (เครื่องคุณเดียร์)', os: 'HarmonyOS / Kiwi Browser', ip: 'แนะนำให้ใช้เน็ตมือถือ 4G/5G แยกต่างหาก' },
+      { icon: 'monitor', name: 'คอมพิวเตอร์ PC (เครื่องแฟน)', os: 'Windows / Chrome Browser', ip: 'ใช้ Wi-Fi บ้าน (คนละ IP กับแท็บเล็ต)' }
+    ];
+    let isWorking = false;
+    let logInterval;
 
-    let browsers = JSON.parse(JSON.stringify(defaultBrowsers));
+    if (savedData?.eventId) {
+      document.getElementById('input-event-id').value = savedData.eventId;
+      document.getElementById('dash-event-id').innerText = savedData.eventId;
+    }
+    if (savedData?.token) document.getElementById('input-token').value = savedData.token;
+    if (savedData?.chatId) document.getElementById('input-chatid').value = savedData.chatId;
 
-    // Navigation Switching
+    // สลับแท็บหลัก
     function switchMainTab(tab) {
-      ['dashboard', 'setup', 'proxy'].forEach(t => {
-        document.getElementById(`view-${t}`).classList.add('hidden');
-        const btn = document.getElementById(`nav-${t}`);
-        btn.classList.remove('border-emeraldMain', 'text-emeraldMain');
-        btn.classList.add('border-transparent', 'text-gray-400');
-      });
-      document.getElementById(`view-${tab}`).classList.remove('hidden');
-      const activeBtn = document.getElementById(`nav-${tab}`);
-      activeBtn.classList.add('border-emeraldMain', 'text-emeraldMain');
-      activeBtn.classList.remove('border-transparent', 'text-gray-400');
+      document.getElementById('view-dashboard').classList.add('hidden');
+      document.getElementById('view-setup').classList.add('hidden');
+      
+      const navDash = document.getElementById('nav-dashboard');
+      const navSetup = document.getElementById('nav-setup');
+      
+      navDash.className = 'main-nav-btn h-full flex items-center gap-2 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-200 transition px-2';
+      navSetup.className = 'main-nav-btn h-full flex items-center gap-2 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-200 transition px-2';
+      
+      if (tab === 'dashboard') {
+        document.getElementById('view-dashboard').classList.remove('hidden');
+        navDash.classList.remove('border-transparent', 'text-gray-400');
+        navDash.classList.add('border-pastelPurple', 'text-pastelPurple');
+      } else {
+        document.getElementById('view-setup').classList.remove('hidden');
+        navSetup.classList.remove('border-transparent', 'text-gray-400');
+        navSetup.classList.add('border-pastelPurple', 'text-pastelPurple');
+      }
     }
 
+    // สลับแท็บตั้งค่า
     function switchConfigTab(sub) {
       document.querySelectorAll('.cfg-panel').forEach(p => p.classList.add('hidden'));
       document.querySelectorAll('.cfg-pill').forEach(b => {
-        b.classList.remove('bg-emeraldMain', 'text-white');
-        b.classList.add('bg-bgCard', 'text-gray-400', 'border', 'border-borderDark');
+        b.className = 'cfg-pill px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 bg-bgCard text-gray-400 hover:text-gray-200 border border-borderDark shrink-0';
       });
       document.getElementById(`cfg-panel-${sub}`).classList.remove('hidden');
-      const activePill = document.getElementById(`cfg-tab-${sub}`);
-      activePill.classList.add('bg-emeraldMain', 'text-white');
-      activePill.classList.remove('bg-bgCard', 'text-gray-400', 'border', 'border-borderDark');
-    }
-
-    function selectBotMode(mode) {
-      const ttm = document.getElementById('mode-card-ttm');
-      const gen = document.getElementById('mode-card-general');
-      if (mode === 'ttm') {
-        ttm.className = 'cursor-pointer rounded-xl p-5 border border-emeraldMain bg-emerald-950/20 text-center transition';
-        gen.className = 'cursor-pointer rounded-xl p-5 border border-borderDark bg-bgInput/50 hover:border-gray-600 text-center transition';
-      } else {
-        gen.className = 'cursor-pointer rounded-xl p-5 border border-emeraldMain bg-emerald-950/20 text-center transition';
-        ttm.className = 'cursor-pointer rounded-xl p-5 border border-borderDark bg-bgInput/50 hover:border-gray-600 text-center transition';
-      }
-      markUnsaved();
+      const activeBtn = document.getElementById(`cfg-tab-${sub}`);
+      activeBtn.className = 'cfg-pill px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 bg-pastelPurple text-purple-950 shrink-0';
     }
 
     function markUnsaved() {
-      const badge = document.getElementById('unsaved-badge');
-      badge.classList.remove('hidden');
-      badge.classList.add('inline-flex');
-    }
-
-    function saveAllSettings() {
-      const badge = document.getElementById('unsaved-badge');
-      badge.classList.add('hidden');
-      badge.classList.remove('inline-flex');
-
-      const eventVal = document.getElementById('input-event-id').value.trim();
-      document.getElementById('dash-event-id').innerText = eventVal || 'ยังไม่ได้ตั้งค่า';
-      document.getElementById('stat-browsers').innerText = browsers.length;
-      document.getElementById('stat-buyers').innerText = buyers.length;
-
-      showToast('บันทึกการตั้งค่าลงระบบเรียบร้อยแล้ว');
+      document.getElementById('unsaved-badge').classList.remove('hidden');
+      document.getElementById('unsaved-badge').classList.add('inline-flex');
     }
 
     function showToast(msg) {
+      document.getElementById('toast-msg').innerText = msg;
       const toast = document.getElementById('toast');
-      toast.innerText = msg;
       toast.classList.remove('translate-y-20', 'opacity-0');
-      setTimeout(() => {
-        toast.classList.add('translate-y-20', 'opacity-0');
-      }, 2500);
+      setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); }, 2500);
     }
 
-    // Priorities Logic
+    function copyText(text, label) {
+      navigator.clipboard.writeText(text);
+      showToast(`คัดลอก ${label} เรียบร้อยแล้ว`);
+    }
+
+    // เลือกแพลตฟอร์ม
+    function selectBotMode(mode) {
+      botMode = mode;
+      const ttm = document.getElementById('mode-card-ttm');
+      const melon = document.getElementById('mode-card-melon');
+      
+      ttm.className = 'cursor-pointer rounded-xl p-5 border-2 border-borderDark bg-bgInput/50 hover:border-gray-600 text-center transition relative overflow-hidden';
+      ttm.innerHTML = `<div class="flex justify-center mb-2 text-pastelPurple"><i data-lucide="ticket" class="w-8 h-8"></i></div>
+            <div class="font-semibold text-gray-100 text-base">ThaiTicketMajor (TTM)</div>
+            <div class="text-xs text-gray-400 mt-1.5">จัดเตรียมลิงก์เข้าหน้าผังและโซนที่ต้องการล่วงหน้า</div>`;
+            
+      melon.className = 'cursor-pointer rounded-xl p-5 border-2 border-borderDark bg-bgInput/50 hover:border-gray-600 text-center transition relative overflow-hidden';
+      melon.innerHTML = `<div class="flex justify-center mb-2 text-pastelPink"><i data-lucide="music" class="w-8 h-8"></i></div>
+            <div class="font-semibold text-gray-100 text-base">Ticketmelon</div>
+            <div class="text-xs text-gray-400 mt-1.5">เตรียมข้อมูลโปรไฟล์และประเภทบัตรสำหรับกดเลือกทันที</div>`;
+
+      if (mode === 'ttm') {
+        ttm.className = 'cursor-pointer rounded-xl p-5 border-2 border-pastelPurple bg-purple-900/10 text-center transition relative overflow-hidden';
+        ttm.innerHTML += `<div class="absolute top-0 right-0 bg-pastelPurple text-purple-950 text-[10px] font-bold px-2 py-1 rounded-bl-lg">เลือกอยู่</div>`;
+      } else {
+        melon.className = 'cursor-pointer rounded-xl p-5 border-2 border-pastelPink bg-pink-900/10 text-center transition relative overflow-hidden';
+        melon.innerHTML += `<div class="absolute top-0 right-0 bg-pastelPink text-pink-950 text-[10px] font-bold px-2 py-1 rounded-bl-lg">เลือกอยู่</div>`;
+      }
+      lucide.createIcons();
+      markUnsaved();
+    }
+
+    // จัดการโซน
     function renderPriorities() {
       const container = document.getElementById('priority-tags-list');
-      container.innerHTML = priorities.map((item, idx) => `
-        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-bgInput border border-borderDark text-xs font-medium text-gray-200">
-          <span class="text-sky-400 font-bold">#${idx + 1}</span>
-          <span>${item}</span>
-          <button onclick="removePriority(${idx})" class="text-red-400 hover:text-red-300 ml-1">✕</button>
+      if (priorities.length === 0) {
+        container.innerHTML = '<span class="text-gray-500 text-sm">ยังไม่มีโซนเป้าหมาย...</span>';
+        return;
+      }
+      container.innerHTML = priorities.map((p, i) => `
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-bgInput border border-borderDark text-xs font-medium text-gray-200">
+          <span class="text-pastelPurple font-bold">ลำดับ ${i+1}</span> : ${p}
+          <button onclick="removePriority(${i})" class="text-gray-500 hover:text-red-400 ml-2"><i data-lucide="x" class="w-3 h-3"></i></button>
         </span>
       `).join('');
+      lucide.createIcons();
     }
 
     function addPriority() {
-      const input = document.getElementById('input-priority');
-      const val = input.value.trim();
-      if (!val) return;
-      priorities.push(val);
-      input.value = '';
-      renderPriorities();
-      markUnsaved();
+      const val = document.getElementById('input-priority').value.trim().toUpperCase();
+      if (val) {
+        priorities.push(val);
+        document.getElementById('input-priority').value = '';
+        renderPriorities();
+        markUnsaved();
+      }
     }
 
     function removePriority(idx) {
@@ -664,273 +421,150 @@
       markUnsaved();
     }
 
-    // Buyers Logic
-    function addBuyerProfile() {
-      const name = document.getElementById('buyer-name').value.trim();
-      const email = document.getElementById('buyer-email').value.trim();
-      const phone = document.getElementById('buyer-phone').value.trim();
-      const card = document.getElementById('buyer-card').value.trim();
-      if (!name || !email) {
-        alert('กรุณากรอกชื่อ-นามสกุล และ Email');
-        return;
-      }
-      buyers.push({ name, email, phone, card: card ? '•••• ' + card.slice(-4) : 'N/A' });
-      ['buyer-name', 'buyer-email', 'buyer-phone', 'buyer-thaiid', 'buyer-card', 'buyer-exp', 'buyer-cvv'].forEach(id => document.getElementById(id).value = '');
+    // จัดการผู้ซื้อ
+    function renderBuyers() {
+      const container = document.getElementById('buyer-list-container');
+      document.getElementById('stat-buyers').innerText = buyers.length;
+      container.innerHTML = buyers.map((b, i) => `
+        <div class="bg-bgInput border border-borderDark rounded-xl p-4 flex flex-col justify-between gap-3">
+          <div class="flex justify-between items-start">
+            <div class="font-semibold text-gray-200 text-sm flex items-center gap-2">
+              <i data-lucide="user" class="w-4 h-4 text-pastelPink"></i> ${b.name}
+            </div>
+            <button onclick="removeBuyer(${i})" class="text-gray-600 hover:text-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+          </div>
+          <div class="text-xs text-gray-400 space-y-1">
+            <p><i data-lucide="mail" class="w-3 h-3 inline mr-1"></i> ${b.email}</p>
+            <p><i data-lucide="phone" class="w-3 h-3 inline mr-1"></i> ${b.phone}</p>
+            <p><i data-lucide="credit-card" class="w-3 h-3 inline mr-1"></i> ${b.card}</p>
+          </div>
+          <div class="flex gap-2 pt-2 border-t border-borderDark/60">
+            <button onclick="copyText('${b.name}', 'ชื่อ-นามสกุล')" class="flex-1 py-1.5 rounded-lg bg-[#0a0c10] hover:bg-gray-800 border border-borderDark text-[11px] text-gray-300 flex items-center justify-center gap-1">
+              <i data-lucide="copy" class="w-3 h-3 text-pastelPurple"></i> คัดลอกชื่อ
+            </button>
+            <button onclick="copyText('${b.phone}', 'เบอร์โทร')" class="flex-1 py-1.5 rounded-lg bg-[#0a0c10] hover:bg-gray-800 border border-borderDark text-[11px] text-gray-300 flex items-center justify-center gap-1">
+              <i data-lucide="copy" class="w-3 h-3 text-pastelPink"></i> คัดลอกเบอร์
+            </button>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function addBuyer() {
+      const name = document.getElementById('b-name').value.trim();
+      const email = document.getElementById('b-email').value.trim();
+      const phone = document.getElementById('b-phone').value.trim();
+      const card = document.getElementById('b-card').value.trim();
+      
+      if (!name) return alert('กรุณากรอกชื่อ-นามสกุลครับ');
+      buyers.push({ name, email: email || '-', phone: phone || '-', card: card || 'QR พร้อมเพย์' });
+      ['b-name', 'b-email', 'b-phone', 'b-card'].forEach(id => document.getElementById(id).value = '');
       renderBuyers();
       markUnsaved();
     }
 
-    function renderBuyers() {
-      const container = document.getElementById('buyer-list-container');
-      if (buyers.length === 0) {
-        container.innerHTML = 'ยังไม่มีโปรไฟล์ — กรอกแบบฟอร์มด้านบนเพื่อเพิ่ม';
-        return;
-      }
-      container.innerHTML = `<div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-left">` + buyers.map((b, i) => `
-        <div class="bg-bgInput border border-borderDark rounded-lg p-3 flex items-center justify-between">
-          <div>
-            <div class="font-semibold text-gray-200 text-xs">${b.name}</div>
-            <div class="text-[11px] text-gray-400">${b.email} • ${b.phone} • Card: ${b.card}</div>
-          </div>
-          <button onclick="buyers.splice(${i},1);renderBuyers();markUnsaved();" class="text-red-400 hover:text-red-300 p-1.5">
-            <i data-lucide="trash-2" class="w-4 h-4"></i>
-          </button>
-        </div>
-      `).join('') + `</div>`;
-      lucide.createIcons();
+    function removeBuyer(idx) {
+      buyers.splice(idx, 1);
+      renderBuyers();
+      markUnsaved();
     }
 
-    // Browsers Logic
-    function renderBrowsers() {
-      const grid = document.getElementById('browser-cards-grid');
-      document.getElementById('browser-tab-count').innerText = browsers.length;
-      const chromeCount = browsers.filter(b => b.browser === 'Chrome').length;
-      const edgeCount = browsers.filter(b => b.browser === 'Edge').length;
-      const ffCount = browsers.filter(b => b.browser === 'Firefox').length;
-      document.getElementById('browser-summary-text').innerText = `${browsers.length} profiles • Chrome ${chromeCount} • Edge ${edgeCount} • Firefox ${ffCount}`;
-
-      grid.innerHTML = browsers.map((b, idx) => `
-        <div class="bg-[#181c20] border border-borderDark rounded-xl p-4 flex flex-col justify-between space-y-3">
-          <div>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2 font-semibold text-xs text-gray-100 truncate">
-                <span class="text-sky-400">🌐</span>
-                <span class="truncate">${b.name}</span>
-              </div>
-              <span class="text-[11px] text-gray-500 font-mono">#${idx + 1}</span>
-            </div>
-            <div class="text-[10px] text-gray-500 font-mono truncate mt-1">${b.ua}</div>
-            <div class="grid grid-cols-2 gap-y-1.5 gap-x-2 mt-3 text-[11px] text-gray-300">
-              <div class="flex items-center gap-1.5"><span class="text-gray-500">🕒</span> Bangkok</div>
-              <div class="flex items-center gap-1.5"><span class="text-gray-500">💬</span> th-TH</div>
-              <div class="flex items-center gap-1.5"><span class="text-gray-500">📐</span> ${b.res}</div>
-              <div class="flex items-center gap-1.5"><span class="text-gray-500">🧠</span> ${b.hw}</div>
-              <div class="col-span-2 flex items-center gap-1.5 text-gray-400 truncate"><span class="text-indigo-400">🎮</span> ${b.gpu}</div>
-              <div class="flex items-center gap-1.5"><span class="text-sky-400">🪟</span> ${b.os}</div>
-              <div class="flex items-center gap-1.5"><span class="text-gray-500">💻</span> Win32</div>
-            </div>
+    // แสดงรายการอุปกรณ์
+    function renderDevices() {
+      const container = document.getElementById('device-list-container');
+      container.innerHTML = devices.map(d => `
+        <div class="bg-bgInput border border-borderDark rounded-xl p-4 flex items-center gap-4">
+          <div class="bg-[#0a0c10] p-3 rounded-full text-sky-400 border border-borderDark shrink-0">
+            <i data-lucide="${d.icon}" class="w-6 h-6"></i>
           </div>
-          <div class="flex items-center gap-2 pt-2 border-t border-borderDark/70">
-            <button onclick="openBrowserModal(${idx})" class="flex-1 py-1.5 rounded bg-bgInput hover:bg-gray-700 text-[11px] text-gray-300 flex items-center justify-center gap-1">
-              ✏️ แก้ไข
-            </button>
-            <button onclick="cloneBrowser(${idx})" class="flex-1 py-1.5 rounded bg-bgInput hover:bg-gray-700 text-[11px] text-gray-300 flex items-center justify-center gap-1">
-              📋 โคลน
-            </button>
-            <button onclick="deleteBrowser(${idx})" class="p-1.5 rounded bg-red-950/40 hover:bg-red-900/60 text-red-400">
-              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-            </button>
+          <div>
+            <div class="font-semibold text-gray-200 text-sm">${d.name}</div>
+            <div class="text-xs text-gray-500 mt-0.5">${d.os} • ${d.ip}</div>
+          </div>
+          <div class="ml-auto hidden sm:block">
+            <span class="px-2.5 py-1 rounded bg-emerald-900/30 text-emerald-400 text-[10px] font-medium border border-emerald-800/30">พร้อมใช้งาน</span>
           </div>
         </div>
       `).join('');
       lucide.createIcons();
     }
 
-    function setBatchCount(n) {
-      selectedBatchCount = n;
-      document.getElementById('batch-btn-label').innerText = n;
-      document.querySelectorAll('.batch-btn').forEach(btn => {
-        if (parseInt(btn.innerText) === n) {
-          btn.className = 'batch-btn px-2.5 py-1 rounded text-xs font-medium bg-indigo-600 text-white';
-        } else {
-          btn.className = 'batch-btn px-2.5 py-1 rounded text-xs font-medium bg-bgInput text-gray-400 hover:text-white';
-        }
-      });
+    // บันทึกการตั้งค่าทั้งหมดลง LocalStorage
+    function saveAllSettings() {
+      const badge = document.getElementById('unsaved-badge');
+      badge.classList.add('hidden');
+      badge.classList.remove('inline-flex');
+      
+      const eventId = document.getElementById('input-event-id').value.trim();
+      const token = document.getElementById('input-token').value.trim();
+      const chatId = document.getElementById('input-chatid').value.trim();
+
+      localStorage.setItem('dear_ticket_config', JSON.stringify({
+        botMode,
+        eventId,
+        priorities,
+        buyers,
+        token,
+        chatId
+      }));
+
+      document.getElementById('dash-event-id').innerText = eventId || 'ยังไม่ได้ตั้งค่า';
+      showToast('บันทึกข้อมูลลงในเครื่องเรียบร้อยแล้ว');
+      switchMainTab('dashboard');
     }
 
-    function generateRandomBrowsers(count) {
-      const gpus = ['RTX 3060', 'RTX 3080', 'RTX 4070', 'RTX 4090', 'Radeon RX 6800 XT'];
-      const resList = ['1920×1080', '2560×1440', '1536×864', '3840×2160'];
-      const types = ['Chrome', 'Edge'];
-      for (let i = 0; i < count; i++) {
-        const type = types[Math.floor(Math.random() * types.length)];
-        const ver = type === 'Chrome' ? `13${Math.floor(Math.random()*2)}.0.6723.58` : '131.0.2903.51';
-        const gpu = gpus[Math.floor(Math.random() * gpus.length)];
-        const res = resList[Math.floor(Math.random() * resList.length)];
-        browsers.push({
-          name: `${type} ${ver.split('.')[0]} / Win / ${gpu}`,
-          browser: type,
-          version: ver,
-          os: 'Windows',
-          res,
-          hw: `${[8,12,16,24][Math.floor(Math.random()*4)]}C / ${[8,16,32][Math.floor(Math.random()*3)]}GB`,
-          gpu,
-          ua: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ${type}/${ver} Safari/537.36`
-        });
-      }
-      renderBrowsers();
-      markUnsaved();
-    }
-
-    function cloneBrowser(idx) {
-      const copy = JSON.parse(JSON.stringify(browsers[idx]));
-      copy.name += ' (Copy)';
-      browsers.splice(idx + 1, 0, copy);
-      renderBrowsers();
-      markUnsaved();
-    }
-
-    function deleteBrowser(idx) {
-      browsers.splice(idx, 1);
-      renderBrowsers();
-      markUnsaved();
-    }
-
-    function clearAllBrowsers() {
-      browsers = [];
-      renderBrowsers();
-      markUnsaved();
-    }
-
-    function resetDefaultBrowsers() {
-      browsers = JSON.parse(JSON.stringify(defaultBrowsers));
-      renderBrowsers();
-      markUnsaved();
-    }
-
-    function openBrowserModal(idx) {
-      editingBrowserIndex = idx;
-      const b = browsers[idx];
-      document.getElementById('modal-subtitle').innerText = b.name;
-      document.getElementById('modal-prof-name').value = b.name;
-      document.getElementById('modal-prof-browser').value = b.browser;
-      document.getElementById('modal-prof-ver').value = b.version;
-      document.getElementById('modal-prof-os').value = b.os;
-      document.getElementById('modal-prof-ua').value = b.ua;
-      const modal = document.getElementById('browser-modal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-
-    function closeBrowserModal() {
-      const modal = document.getElementById('browser-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    function saveBrowserModal() {
-      if (editingBrowserIndex === null) return;
-      const b = browsers[editingBrowserIndex];
-      b.name = document.getElementById('modal-prof-name').value;
-      b.browser = document.getElementById('modal-prof-browser').value;
-      b.version = document.getElementById('modal-prof-ver').value;
-      b.os = document.getElementById('modal-prof-os').value;
-      b.ua = document.getElementById('modal-prof-ua').value;
-      closeBrowserModal();
-      renderBrowsers();
-      markUnsaved();
-    }
-
-    function exportBrowsersJSON() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(browsers, null, 2));
-      const dlAnchor = document.createElement('a');
-      dlAnchor.setAttribute("href", dataStr);
-      dlAnchor.setAttribute("download", "browser_profiles.json");
-      dlAnchor.click();
-    }
-
-    // Dashboard Live Logs Simulation (UI Preview Only)
-    function initLogs() {
+    // จำลองการทำงานบน Dashboard
+    function logMsg(msg, type = 'info') {
       const box = document.getElementById('live-logs-box');
-      const ids = ['5a89719b', 'd5d81090', '0eddad05', '05251a89', '12485e2f', '8a66c30b', '3a9f41d3', 'fdfffd80'];
-      box.innerHTML = ids.map(id => `
-        <div><span class="text-gray-500">[20:58:01]</span> <span class="text-emerald-400">[INFO]</span> <span class="text-sky-400">[worker-${id}]</span> Worker พร้อมแล้ว ⏳ - รอคำสั่ง START จาก Dashboard</div>
-      `).join('');
-    }
-
-    function appendLog(workerId, msg, level = 'INFO') {
-      const box = document.getElementById('live-logs-box');
-      const now = new Date().toTimeString().split(' ')[0];
-      const color = level === 'WARN' ? 'text-amber-400' : 'text-emerald-400';
-      const line = document.createElement('div');
-      line.innerHTML = `<span class="text-gray-500">[${now}]</span> <span class="${color}">[${level}]</span> <span class="text-sky-400">[worker-${workerId}]</span> ${msg}`;
-      box.prepend(line);
-    }
-
-    function startWorkers() {
-      const st = document.getElementById('stat-sys-status');
-      st.innerText = 'RUNNING';
-      st.className = 'text-2xl font-bold text-emerald-400 my-2 tracking-wide';
-      document.getElementById('stat-sys-sub').innerText = 'Workers active (UI simulation)';
-      if (workerInterval) clearInterval(workerInterval);
-      const ids = ['5a89719b', 'd5d81090', '0eddad05', '05251a89'];
-      appendLog('system', 'เริ่มการทำงานของ Workers ทั้งหมด (UI Demo)');
-      workerInterval = setInterval(() => {
-        const w = ids[Math.floor(Math.random() * ids.length)];
-        appendLog(w, `ตรวจสอบสถานะคิวและซิงค์ข้อมูลการตั้งค่า...`);
-      }, 1800);
-    }
-
-    function stopWorkers() {
-      if (workerInterval) clearInterval(workerInterval);
-      const st = document.getElementById('stat-sys-status');
-      st.innerText = 'STANDBY';
-      st.className = 'text-2xl font-bold text-amber-400 my-2 tracking-wide';
-      document.getElementById('stat-sys-sub').innerText = 'Press START to launch bots';
-      appendLog('system', 'หยุดการทำงานของ Workers ทั้งหมดแล้ว', 'WARN');
+      const time = new Date().toLocaleTimeString('th-TH');
+      let colorClass = 'text-gray-300';
+      if (type === 'success') colorClass = 'text-emerald-400';
+      if (type === 'warning') colorClass = 'text-amber-400';
+      
+      const el = document.createElement('div');
+      el.innerHTML = `<span class="text-gray-600">[${time}]</span> <span class="${colorClass}">${msg}</span>`;
+      box.prepend(el);
     }
 
     function clearLogs() {
       document.getElementById('live-logs-box').innerHTML = '';
     }
 
-    // Proxy Checker Simulation (UI Preview Only)
-    function parseAndCheckProxies() {
-      const raw = document.getElementById('proxy-input-area').value.trim();
-      const lines = raw ? raw.split('\n').map(l => l.trim()).filter(Boolean) : ['http://user:pass@gate.th-isp.net:8001', 'http://user:pass@gate.th-isp.net:8002'];
-      const tbody = document.getElementById('proxy-table-body');
-      const now = new Date().toTimeString().split(' ')[0];
-
-      document.getElementById('px-stat-active').innerText = lines.length;
-      document.getElementById('px-stat-total').innerText = lines.length;
-      document.getElementById('stat-proxy-active').innerText = lines.length;
-      document.getElementById('stat-proxy-total').innerText = lines.length;
-
-      tbody.innerHTML = lines.map((line, i) => {
-        const masked = line.replace(/:([^:@]+)@/, ':****@');
-        const latency = 18 + Math.floor(Math.random() * 25);
-        return `
-          <tr class="hover:bg-bgInput/40">
-            <td class="py-2.5 px-3 font-mono text-gray-300">${masked}</td>
-            <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/50 text-[10px]">ACTIVE</span></td>
-            <td class="py-2.5 px-3 font-mono text-gray-400">49.228.112.${10 + i}</td>
-            <td class="py-2.5 px-3 text-gray-300">True Internet / AIS Fibre TH</td>
-            <td class="py-2.5 px-3 text-emerald-400 font-mono">${latency} ms</td>
-            <td class="py-2.5 px-3 text-gray-500 font-mono">${now}</td>
-          </tr>
-        `;
-      }).join('');
-      showToast(`อัปเดตสถานะ Proxy จำนวน ${lines.length} รายการ`);
+    function startWorkers() {
+      if (isWorking) return;
+      isWorking = true;
+      document.getElementById('stat-sys-status').innerText = 'กำลังทำงาน (จำลอง)';
+      document.getElementById('stat-sys-status').className = 'text-xl font-bold text-emerald-400 my-2';
+      logMsg(`🟢 เริ่มตรวจสอบข้อมูลเป้าหมาย (${botMode === 'ttm' ? 'ThaiTicketMajor' : 'Ticketmelon'})...`, 'success');
+      
+      let step = 0;
+      logInterval = setInterval(() => {
+        const msgs = [
+          `ตรวจสอบลำดับโซนเป้าหมาย: ${priorities.join(' ➔ ')}`,
+          `เตรียมข้อมูลผู้ซื้อพร้อมคัดลอก: ${buyers.map(b => b.name).join(', ')}`,
+          `ซิงค์สถานะระหว่าง Huawei MatePad 11.5 และ PC ปกติ...`
+        ];
+        logMsg(msgs[step % msgs.length]);
+        step++;
+      }, 2500);
     }
 
-    function simulateProxyCheck() {
-      parseAndCheckProxies();
+    function stopWorkers() {
+      if (!isWorking) return;
+      isWorking = false;
+      clearInterval(logInterval);
+      document.getElementById('stat-sys-status').innerText = 'สแตนด์บาย';
+      document.getElementById('stat-sys-status').className = 'text-xl font-bold text-amber-400 my-2';
+      logMsg('🛑 หยุดการจำลองการทำงานเรียบร้อยแล้ว', 'warning');
     }
 
-    // Boot
+    // เริ่มต้นแสดงผล
+    selectBotMode(botMode);
+    document.getElementById('unsaved-badge').classList.add('hidden');
     renderPriorities();
-    renderBrowsers();
-    initLogs();
+    renderBuyers();
+    renderDevices();
     lucide.createIcons();
   </script>
 </body>
